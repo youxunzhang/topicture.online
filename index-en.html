@@ -1,18 +1,18 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-DYN88FTE04"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DYN88FTE04"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
 
-  gtag('config', 'G-DYN88FTE04');
-</script>
+      gtag('config', 'G-DYN88FTE04');
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>文字转图片 - Text to Image Converter</title>
+    <title>Text to Image Converter - Create Beautiful Images from Text</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -27,24 +27,24 @@
             </div>
             <ul class="nav-menu">
                 <li class="nav-item">
-                    <a href="#home" class="nav-link active">首页</a>
+                    <a href="#home" class="nav-link active">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#features" class="nav-link">功能</a>
+                    <a href="#features" class="nav-link">Features</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#about" class="nav-link">关于</a>
+                    <a href="#about" class="nav-link">About</a>
                 </li>
                 <li class="nav-item">
                     <a href="https://www.seodog.cn" class="nav-link" target="_blank" rel="noopener noreferrer">
                         <i class="fas fa-robot"></i>
-                        AI工具
+                        AI Tools
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="index-en.html" class="nav-link language-switch">
+                    <a href="index.html" class="nav-link language-switch">
                         <i class="fas fa-globe"></i>
-                        English
+                        中文
                     </a>
                 </li>
             </ul>
@@ -55,30 +55,30 @@
     <section id="home" class="hero">
         <div class="hero-container">
             <div class="hero-content">
-                <h1 class="hero-title">将文字转换为精美图片</h1>
-                <p class="hero-subtitle">简单、快速、专业的文字转图片工具，支持多种样式和格式</p>
+                <h1 class="hero-title">Transform Text into Stunning Images</h1>
+                <p class="hero-subtitle">Professional text-to-image converter with multiple styles and formats. Create beautiful visuals in seconds.</p>
                 <div class="hero-buttons">
                     <button class="btn btn-primary" onclick="scrollToConverter()">
                         <i class="fas fa-magic"></i>
-                        开始转换
+                        Start Creating
                     </button>
                     <button class="btn btn-secondary" onclick="scrollToFeatures()">
                         <i class="fas fa-info-circle"></i>
-                        了解更多
+                        Learn More
                     </button>
                 </div>
             </div>
             <div class="hero-image">
                 <div class="floating-card">
                     <i class="fas fa-text-height"></i>
-                    <span>文字</span>
+                    <span>Text</span>
                 </div>
                 <div class="arrow">
                     <i class="fas fa-arrow-right"></i>
                 </div>
                 <div class="floating-card">
                     <i class="fas fa-image"></i>
-                    <span>图片</span>
+                    <span>Image</span>
                 </div>
             </div>
         </div>
@@ -88,32 +88,32 @@
     <section id="converter" class="converter">
         <div class="container">
             <div class="section-header">
-                <h2>文字转图片工具</h2>
-                <p>输入您的文字，选择样式，一键生成精美图片</p>
+                <h2>Text to Image Converter</h2>
+                <p>Enter your text, choose your style, and generate beautiful images with one click</p>
             </div>
             
             <div class="converter-grid">
                 <!-- Input Panel -->
                 <div class="input-panel">
                     <div class="panel-header">
-                        <h3><i class="fas fa-edit"></i> 输入文字</h3>
+                        <h3><i class="fas fa-edit"></i> Enter Text</h3>
                     </div>
                     <div class="input-content">
                         <textarea 
                             id="textInput" 
-                            placeholder="在这里输入您想要转换的文字..."
+                            placeholder="Enter the text you want to convert into an image..."
                             rows="8"
                         ></textarea>
                         
                         <div class="text-controls">
                             <div class="control-group">
-                                <label for="fontSize">字体大小:</label>
+                                <label for="fontSize">Font Size:</label>
                                 <input type="range" id="fontSize" min="16" max="72" value="24">
                                 <span id="fontSizeValue">24px</span>
                             </div>
                             
                             <div class="control-group">
-                                <label for="fontFamily">字体:</label>
+                                <label for="fontFamily">Font:</label>
                                 <select id="fontFamily">
                                     <option value="Inter">Inter</option>
                                     <option value="Arial">Arial</option>
@@ -124,19 +124,19 @@
                             </div>
                             
                             <div class="control-group">
-                                <label for="textColor">文字颜色:</label>
+                                <label for="textColor">Text Color:</label>
                                 <input type="color" id="textColor" value="#333333">
                             </div>
                             
                             <div class="control-group">
-                                <label for="backgroundColor">背景颜色:</label>
+                                <label for="backgroundColor">Background Color:</label>
                                 <input type="color" id="backgroundColor" value="#ffffff">
                             </div>
                         </div>
                         
                         <button id="generateBtn" class="btn btn-primary btn-full">
                             <i class="fas fa-magic"></i>
-                            生成图片
+                            Generate Image
                         </button>
                     </div>
                 </div>
@@ -144,33 +144,33 @@
                 <!-- Output Panel -->
                 <div class="output-panel">
                     <div class="panel-header">
-                        <h3><i class="fas fa-image"></i> 生成结果</h3>
+                        <h3><i class="fas fa-image"></i> Generated Result</h3>
                     </div>
                     <div class="output-content">
                         <div id="imagePreview" class="image-preview">
                             <div class="preview-placeholder">
                                 <i class="fas fa-image"></i>
-                                <p>生成的图片将在这里显示</p>
+                                <p>Generated image will appear here</p>
                             </div>
                         </div>
                         
                         <div id="downloadSection" class="download-section" style="display: none;">
                             <div class="download-options">
-                                <label for="imageFormat">格式:</label>
+                                <label for="imageFormat">Format:</label>
                                 <select id="imageFormat">
                                     <option value="png">PNG</option>
                                     <option value="jpeg">JPEG</option>
                                     <option value="webp">WebP</option>
                                 </select>
                                 
-                                <label for="imageQuality">质量:</label>
+                                <label for="imageQuality">Quality:</label>
                                 <input type="range" id="imageQuality" min="0.1" max="1" step="0.1" value="0.9">
                                 <span id="qualityValue">90%</span>
                             </div>
                             
                             <button id="downloadBtn" class="btn btn-success btn-full">
                                 <i class="fas fa-download"></i>
-                                下载图片
+                                Download Image
                             </button>
                         </div>
                     </div>
@@ -183,8 +183,8 @@
     <section id="features" class="features">
         <div class="container">
             <div class="section-header">
-                <h2>强大功能</h2>
-                <p>为您提供专业的文字转图片体验</p>
+                <h2>Powerful Features</h2>
+                <p>Professional text-to-image experience designed for you</p>
             </div>
             
             <div class="features-grid">
@@ -192,48 +192,48 @@
                     <div class="feature-icon">
                         <i class="fas fa-palette"></i>
                     </div>
-                    <h3>多种样式</h3>
-                    <p>支持多种字体、颜色和背景样式，让您的文字更加美观</p>
+                    <h3>Multiple Styles</h3>
+                    <p>Support for various fonts, colors, and background styles to make your text visually appealing</p>
                 </div>
                 
                 <div class="feature-card">
                     <div class="feature-icon">
                         <i class="fas fa-download"></i>
                     </div>
-                    <h3>多种格式</h3>
-                    <p>支持PNG、JPEG、WebP等多种图片格式下载</p>
+                    <h3>Multiple Formats</h3>
+                    <p>Download in PNG, JPEG, WebP and other popular image formats</p>
                 </div>
                 
                 <div class="feature-card">
                     <div class="feature-icon">
                         <i class="fas fa-mobile-alt"></i>
                     </div>
-                    <h3>响应式设计</h3>
-                    <p>完美适配各种设备，手机、平板、电脑都能轻松使用</p>
+                    <h3>Responsive Design</h3>
+                    <p>Perfect compatibility across all devices - phones, tablets, and computers</p>
                 </div>
                 
                 <div class="feature-card">
                     <div class="feature-icon">
                         <i class="fas fa-bolt"></i>
                     </div>
-                    <h3>快速生成</h3>
-                    <p>实时预览，快速生成，无需等待</p>
+                    <h3>Lightning Fast</h3>
+                    <p>Real-time preview and instant generation with no waiting time</p>
                 </div>
                 
                 <div class="feature-card">
                     <div class="feature-icon">
                         <i class="fas fa-shield-alt"></i>
                     </div>
-                    <h3>隐私安全</h3>
-                    <p>所有处理都在本地完成，保护您的隐私安全</p>
+                    <h3>Privacy Secure</h3>
+                    <p>All processing done locally to protect your privacy and data security</p>
                 </div>
                 
                 <div class="feature-card">
                     <div class="feature-icon">
                         <i class="fas fa-cog"></i>
                     </div>
-                    <h3>自定义设置</h3>
-                    <p>丰富的自定义选项，满足您的各种需求</p>
+                    <h3>Customizable Settings</h3>
+                    <p>Rich customization options to meet all your creative needs</p>
                 </div>
             </div>
         </div>
@@ -244,22 +244,22 @@
         <div class="container">
             <div class="about-content">
                 <div class="about-text">
-                    <h2>关于我们</h2>
-                    <p>我们致力于为用户提供简单易用的文字转图片工具。无论您是需要制作社交媒体图片、海报设计还是其他创意内容，我们的工具都能帮助您快速实现。</p>
-                    <p>所有功能完全免费，无需注册，即开即用。我们相信好的工具应该是简单、快速、免费的。</p>
+                    <h2>About Us</h2>
+                    <p>We are dedicated to providing users with simple and easy-to-use text-to-image tools. Whether you need to create social media graphics, poster designs, or other creative content, our tool can help you achieve it quickly.</p>
+                    <p>All features are completely free, no registration required, ready to use immediately. We believe that good tools should be simple, fast, and free.</p>
                 </div>
                 <div class="about-stats">
                     <div class="stat-item">
                         <div class="stat-number">100%</div>
-                        <div class="stat-label">免费使用</div>
+                        <div class="stat-label">Free to Use</div>
                     </div>
                     <div class="stat-item">
                         <div class="stat-number">∞</div>
-                        <div class="stat-label">无限生成</div>
+                        <div class="stat-label">Unlimited Generation</div>
                     </div>
                     <div class="stat-item">
                         <div class="stat-number">0</div>
-                        <div class="stat-label">隐私风险</div>
+                        <div class="stat-label">Privacy Risk</div>
                     </div>
                 </div>
             </div>
@@ -275,31 +275,31 @@
                         <i class="fas fa-image"></i>
                         <span>TextToImage</span>
                     </div>
-                    <p>简单、快速、专业的文字转图片工具</p>
+                    <p>Simple, fast, and professional text-to-image tool</p>
                 </div>
                 <div class="footer-section">
-                    <h4>功能</h4>
+                    <h4>Features</h4>
                     <ul>
-                        <li><a href="#converter">文字转图片</a></li>
-                        <li><a href="#features">多种格式</a></li>
-                        <li><a href="#features">自定义样式</a></li>
+                        <li><a href="#converter">Text to Image</a></li>
+                        <li><a href="#features">Multiple Formats</a></li>
+                        <li><a href="#features">Custom Styles</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
-                    <h4>关于</h4>
+                    <h4>About</h4>
                     <ul>
-                        <li><a href="#about">关于我们</a></li>
-                        <li><a href="#features">功能介绍</a></li>
-                        <li><a href="#privacy">隐私政策</a></li>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#privacy">Privacy Policy</a></li>
                     </ul>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2024 TextToImage. 保留所有权利。</p>
+                <p>&copy; 2024 TextToImage. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="script-en.js"></script>
 </body>
 </html> 

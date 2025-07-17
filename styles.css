@@ -107,6 +107,23 @@ body {
     width: 100%;
 }
 
+.language-switch {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white !important;
+    padding: 8px 16px !important;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+}
+
+.language-switch:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.language-switch::after {
+    display: none;
+}
+
 /* Hero Section */
 .hero {
     padding: 120px 0 80px;

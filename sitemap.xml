@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+    
+    <!-- Chinese Homepage -->
+    <url>
+        <loc>https://topicture.online/</loc>
+        <lastmod>2024-12-19</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>1.0</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://topicture.online/index-en.html"/>
+        <xhtml:link rel="alternate" hreflang="zh-CN" href="https://topicture.online/"/>
+    </url>
+    
+    <!-- English Homepage -->
+    <url>
+        <loc>https://topicture.online/index-en.html</loc>
+        <lastmod>2024-12-19</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>1.0</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://topicture.online/index-en.html"/>
+        <xhtml:link rel="alternate" hreflang="zh-CN" href="https://topicture.online/"/>
+    </url>
+    
+    <!-- Chinese Privacy Policy -->
+    <url>
+        <loc>https://topicture.online/privacy.html</loc>
+        <lastmod>2024-12-19</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.3</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://topicture.online/privacy-en.html"/>
+        <xhtml:link rel="alternate" hreflang="zh-CN" href="https://topicture.online/privacy.html"/>
+    </url>
+    
+    <!-- English Privacy Policy -->
+    <url>
+        <loc>https://topicture.online/privacy-en.html</loc>
+        <lastmod>2024-12-19</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.3</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://topicture.online/privacy-en.html"/>
+        <xhtml:link rel="alternate" hreflang="zh-CN" href="https://topicture.online/privacy.html"/>
+    </url>
+    
+</urlset>

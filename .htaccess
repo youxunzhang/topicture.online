@@ -93,3 +93,4 @@ ErrorDocument 500 /500.html
         Header set Link "</styles.css>; rel=preload; as=style, </script.js>; rel=preload; as=script"
     </FilesMatch>
 </IfModule>
+

@@ -1,7 +1,7 @@
 {
-  "name": "Text to Image Converter - Create Beautiful Images from Text",
+  "name": "AI Painting Tool - Text to Image Generator | Create Beautiful Images from Text",
   "short_name": "TextToImage",
-  "description": "Professional text-to-image converter with multiple styles and formats. Create beautiful visuals in seconds.",
+  "description": "Professional AI painting and text-to-image converter with multiple styles and formats. Create beautiful visuals and AI art in seconds.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
@@ -23,7 +23,7 @@
       "purpose": "any maskable"
     }
   ],
-  "categories": ["productivity", "utilities", "graphics"],
+  "categories": ["productivity", "utilities", "graphics", "ai", "art", "creativity"],
   "screenshots": [
     {
       "src": "/screenshot-wide.png",

@@ -5,7 +5,7 @@
     <!-- Chinese Homepage -->
     <url>
         <loc>https://topicture.online/</loc>
-        <lastmod>2024-12-19</lastmod>
+        <lastmod>2024-12-20</lastmod>
         <changefreq>weekly</changefreq>
         <priority>1.0</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://topicture.online/index-en.html"/>
@@ -15,7 +15,7 @@
     <!-- English Homepage -->
     <url>
         <loc>https://topicture.online/index-en.html</loc>
-        <lastmod>2024-12-19</lastmod>
+        <lastmod>2024-12-20</lastmod>
         <changefreq>weekly</changefreq>
         <priority>1.0</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://topicture.online/index-en.html"/>
@@ -25,7 +25,7 @@
     <!-- Chinese Privacy Policy -->
     <url>
         <loc>https://topicture.online/privacy.html</loc>
-        <lastmod>2024-12-19</lastmod>
+        <lastmod>2024-12-20</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.3</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://topicture.online/privacy-en.html"/>
@@ -35,7 +35,7 @@
     <!-- English Privacy Policy -->
     <url>
         <loc>https://topicture.online/privacy-en.html</loc>
-        <lastmod>2024-12-19</lastmod>
+        <lastmod>2024-12-20</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.3</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://topicture.online/privacy-en.html"/>

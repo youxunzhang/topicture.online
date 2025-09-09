@@ -559,6 +559,145 @@ window.addEventListener('beforeunload', function() {
 });
 
 
+// Bookmark functionality
+function bookmarkPage() {
+    const title = document.title;
+    const url = window.location.href;
+    
+    if (window.sidebar && window.sidebar.addPanel) {
+        // Firefox
+        window.sidebar.addPanel(title, url, '');
+    } else if (window.external && ('AddFavorite' in window.external)) {
+        // Internet Explorer
+        window.external.AddFavorite(url, title);
+    } else if (window.opera && window.print) {
+        // Opera
+        const elem = document.createElement('a');
+        elem.setAttribute('href', url);
+        elem.setAttribute('title', title);
+        elem.setAttribute('rel', 'sidebar');
+        elem.click();
+    } else {
+        // Modern browsers
+        if (navigator.userAgent.toLowerCase().indexOf('chrome') > -1) {
+            alert('Press Ctrl+D (or Cmd+D on Mac) to bookmark this page');
+        } else {
+            alert('Press Ctrl+D (or Cmd+D on Mac) to bookmark this page');
+        }
+    }
+}
+
+// Share functionality
+function sharePage() {
+    const title = document.title;
+    const url = window.location.href;
+    const text = 'Check out this amazing free image resizer tool!';
+    
+    if (navigator.share) {
+        // Native Web Share API
+        navigator.share({
+            title: title,
+            text: text,
+            url: url
+        }).catch(err => console.log('Error sharing:', err));
+    } else {
+        // Fallback: Show share options
+        showShareModal(title, text, url);
+    }
+}
+
+// Show share modal with social media options
+function showShareModal(title, text, url) {
+    const modal = document.createElement('div');
+    modal.className = 'share-modal';
+    modal.innerHTML = `
+        <div class="share-modal-content">
+            <div class="share-modal-header">
+                <h3>Share this page</h3>
+                <button class="close-modal" onclick="closeShareModal()">&times;</button>
+            </div>
+            <div class="share-options">
+                <a href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}" target="_blank" class="share-option facebook">
+                    <i class="fab fa-facebook-f"></i>
+                    Facebook
+                </a>
+                <a href="https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}" target="_blank" class="share-option twitter">
+                    <i class="fab fa-twitter"></i>
+                    Twitter
+                </a>
+                <a href="https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}" target="_blank" class="share-option linkedin">
+                    <i class="fab fa-linkedin-in"></i>
+                    LinkedIn
+                </a>
+                <a href="https://pinterest.com/pin/create/button/?url=${encodeURIComponent(url)}&description=${encodeURIComponent(text)}" target="_blank" class="share-option pinterest">
+                    <i class="fab fa-pinterest-p"></i>
+                    Pinterest
+                </a>
+                <a href="https://wa.me/?text=${encodeURIComponent(text + ' ' + url)}" target="_blank" class="share-option whatsapp">
+                    <i class="fab fa-whatsapp"></i>
+                    WhatsApp
+                </a>
+                <a href="https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}" target="_blank" class="share-option telegram">
+                    <i class="fab fa-telegram-plane"></i>
+                    Telegram
+                </a>
+                <button class="share-option copy-link" onclick="copyToClipboard('${url}')">
+                    <i class="fas fa-link"></i>
+                    Copy Link
+                </button>
+            </div>
+        </div>
+    `;
+    
+    // Add styles
+    modal.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 10000;
+    `;
+    
+    document.body.appendChild(modal);
+}
+
+function closeShareModal() {
+    const modal = document.querySelector('.share-modal');
+    if (modal) {
+        modal.remove();
+    }
+}
+
+function copyToClipboard(text) {
+    navigator.clipboard.writeText(text).then(() => {
+        alert('Link copied to clipboard!');
+        closeShareModal();
+    }).catch(err => {
+        console.error('Failed to copy: ', err);
+        // Fallback for older browsers
+        const textArea = document.createElement('textarea');
+        textArea.value = text;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+        alert('Link copied to clipboard!');
+        closeShareModal();
+    });
+}
+
+// Close modal when clicking outside
+document.addEventListener('click', function(e) {
+    if (e.target.classList.contains('share-modal')) {
+        closeShareModal();
+    }
+});
+
 // Service Worker registration for PWA capabilities (optional)
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', function() {

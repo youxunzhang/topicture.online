@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ImageResizer Pro - Professional Image Size Adjustment Tool</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-image"></i>
+                <span>ImageResizer Pro</span>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link active">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="about.html" class="nav-link">About</a>
+                </li>
+                <li class="nav-item">
+                    <a href="features.html" class="nav-link">Features</a>
+                </li>
+                <li class="nav-item">
+                    <a href="contact.html" class="nav-link">Contact</a>
+                </li>
+            </ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1 class="hero-title">Resize Images Like a Pro</h1>
+                <p class="hero-subtitle">Transform your images with precision. Our advanced resizing tool supports multiple formats and maintains quality while adjusting dimensions.</p>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary" onclick="scrollToResizer()">
+                        <i class="fas fa-upload"></i>
+                        Start Resizing
+                    </button>
+                    <button class="btn btn-secondary" onclick="scrollToFeatures()">
+                        <i class="fas fa-info-circle"></i>
+                        Learn More
+                    </button>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="image-placeholder">
+                    <i class="fas fa-image"></i>
+                    <p>Your Image Here</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Image Resizer Tool -->
+    <section class="resizer-section" id="resizer">
+        <div class="container">
+            <h2 class="section-title">Image Resizer Tool</h2>
+            <div class="resizer-container">
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-content">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <h3>Drop your image here or click to browse</h3>
+                        <p>Supports JPG, PNG, GIF, WebP formats</p>
+                        <input type="file" id="imageInput" accept="image/*" hidden>
+                    </div>
+                </div>
+                
+                <div class="resizer-controls" id="resizerControls" style="display: none;">
+                    <div class="image-preview-container">
+                        <div class="image-preview" id="imagePreview">
+                            <img id="previewImage" alt="Preview">
+                        </div>
+                        <div class="image-info">
+                            <span id="originalSize"></span>
+                            <span id="newSize"></span>
+                        </div>
+                    </div>
+                    
+                    <div class="controls-panel">
+                        <div class="control-group">
+                            <label for="widthInput">Width (px)</label>
+                            <input type="number" id="widthInput" min="1" max="10000">
+                        </div>
+                        
+                        <div class="control-group">
+                            <label for="heightInput">Height (px)</label>
+                            <input type="number" id="heightInput" min="1" max="10000">
+                        </div>
+                        
+                        <div class="control-group">
+                            <label for="aspectRatio">
+                                <input type="checkbox" id="aspectRatio" checked>
+                                Maintain Aspect Ratio
+                            </label>
+                        </div>
+                        
+                        <div class="control-group">
+                            <label for="qualitySlider">Quality: <span id="qualityValue">90</span>%</label>
+                            <input type="range" id="qualitySlider" min="10" max="100" value="90">
+                        </div>
+                        
+                        <div class="control-group">
+                            <label for="formatSelect">Output Format</label>
+                            <select id="formatSelect">
+                                <option value="original">Keep Original</option>
+                                <option value="jpeg">JPEG</option>
+                                <option value="png">PNG</option>
+                                <option value="webp">WebP</option>
+                            </select>
+                        </div>
+                        
+                        <div class="action-buttons">
+                            <button class="btn btn-primary" id="resizeBtn">
+                                <i class="fas fa-magic"></i>
+                                Resize Image
+                            </button>
+                            <button class="btn btn-secondary" id="downloadBtn" disabled>
+                                <i class="fas fa-download"></i>
+                                Download
+                            </button>
+                            <button class="btn btn-outline" id="resetBtn">
+                                <i class="fas fa-refresh"></i>
+                                Reset
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section" id="features">
+        <div class="container">
+            <h2 class="section-title">Why Choose ImageResizer Pro?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3>Lightning Fast</h3>
+                    <p>Process images in seconds with our optimized algorithms. No waiting, no delays.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Privacy First</h3>
+                    <p>Your images are processed locally in your browser. Nothing is uploaded to our servers.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-palette"></i>
+                    </div>
+                    <h3>Quality Preserved</h3>
+                    <p>Advanced algorithms maintain image quality while adjusting dimensions to your specifications.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>Mobile Friendly</h3>
+                    <p>Works seamlessly on all devices. Resize images on your phone, tablet, or desktop.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-file-image"></i>
+                    </div>
+                    <h3>Multiple Formats</h3>
+                    <p>Support for JPG, PNG, GIF, and WebP formats with format conversion options.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <h3>Advanced Controls</h3>
+                    <p>Fine-tune your images with quality settings, aspect ratio controls, and format options.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <i class="fas fa-image"></i>
+                        <span>ImageResizer Pro</span>
+                    </div>
+                    <p>Professional image resizing made simple. Transform your images with precision and ease.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="features.html">Features</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Connect</h4>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 ImageResizer Pro. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="debug.js"></script>
+</body>
+</html>

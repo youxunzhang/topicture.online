@@ -14,8 +14,6 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeDOMElements();
     initializeEventListeners();
     initializeNavigation();
-    initializeContactForm();
-    initializeFAQ();
 });
 
 // Initialize DOM elements
@@ -520,68 +518,6 @@ window.addEventListener('beforeunload', function() {
     }
 });
 
-// Contact form functionality
-function initializeContactForm() {
-    const contactForm = document.getElementById('contactForm');
-    if (contactForm) {
-        contactForm.addEventListener('submit', handleContactFormSubmit);
-    }
-}
-
-function handleContactFormSubmit(e) {
-    e.preventDefault();
-    
-    const formData = new FormData(e.target);
-    const data = Object.fromEntries(formData);
-    
-    // Validate form
-    if (!data.name || !data.email || !data.subject || !data.message) {
-        showError('Please fill in all required fields.');
-        return;
-    }
-    
-    // Show loading state
-    const submitBtn = e.target.querySelector('button[type="submit"]');
-    const originalText = submitBtn.innerHTML;
-    submitBtn.innerHTML = '<div class="loading"></div> Sending...';
-    submitBtn.disabled = true;
-    
-    // Simulate form submission (replace with actual API call)
-    setTimeout(() => {
-        showSuccess('Message sent successfully! We\'ll get back to you within 24 hours.');
-        e.target.reset();
-        submitBtn.innerHTML = originalText;
-        submitBtn.disabled = false;
-    }, 2000);
-}
-
-// FAQ functionality
-function initializeFAQ() {
-    const faqItems = document.querySelectorAll('.faq-item');
-    faqItems.forEach(item => {
-        const question = item.querySelector('.faq-question');
-        question.addEventListener('click', () => {
-            const isActive = item.classList.contains('active');
-            
-            // Close all other FAQ items
-            faqItems.forEach(otherItem => {
-                if (otherItem !== item) {
-                    otherItem.classList.remove('active');
-                }
-            });
-            
-            // Toggle current item
-            if (isActive) {
-                item.classList.remove('active');
-            } else {
-                item.classList.add('active');
-            }
-        });
-    });
-}
-
-// This function is already called in the main DOMContentLoaded event
-// No need to duplicate it
 
 // Service Worker registration for PWA capabilities (optional)
 if ('serviceWorker' in navigator) {

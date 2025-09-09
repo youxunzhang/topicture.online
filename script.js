@@ -35,24 +35,55 @@ function initializeDOMElements() {
     resetBtn = document.getElementById('resetBtn');
     hamburger = document.querySelector('.hamburger');
     navMenu = document.querySelector('.nav-menu');
+    
+    // Debug: Log which elements were found
+    console.log('DOM Elements initialized:', {
+        uploadArea: !!uploadArea,
+        imageInput: !!imageInput,
+        resizerControls: !!resizerControls,
+        imagePreview: !!imagePreview,
+        originalSize: !!originalSize,
+        newSize: !!newSize,
+        widthInput: !!widthInput,
+        heightInput: !!heightInput,
+        aspectRatioCheckbox: !!aspectRatioCheckbox,
+        qualitySlider: !!qualitySlider,
+        qualityValue: !!qualityValue,
+        formatSelect: !!formatSelect,
+        resizeBtn: !!resizeBtn,
+        downloadBtn: !!downloadBtn,
+        resetBtn: !!resetBtn,
+        hamburger: !!hamburger,
+        navMenu: !!navMenu
+    });
 }
 
 // Event Listeners
 function initializeEventListeners() {
     // Check if elements exist before adding listeners
     if (!uploadArea || !imageInput || !resizerControls) {
-        console.error('Required DOM elements not found');
+        console.error('Required DOM elements not found:', {
+            uploadArea: !!uploadArea,
+            imageInput: !!imageInput,
+            resizerControls: !!resizerControls
+        });
         return;
     }
     
     // Upload area events
-    uploadArea.addEventListener('click', () => imageInput.click());
-    uploadArea.addEventListener('dragover', handleDragOver);
-    uploadArea.addEventListener('dragleave', handleDragLeave);
-    uploadArea.addEventListener('drop', handleDrop);
+    if (uploadArea) {
+        uploadArea.addEventListener('click', () => {
+            if (imageInput) imageInput.click();
+        });
+        uploadArea.addEventListener('dragover', handleDragOver);
+        uploadArea.addEventListener('dragleave', handleDragLeave);
+        uploadArea.addEventListener('drop', handleDrop);
+    }
     
     // File input event
-    imageInput.addEventListener('change', handleFileSelect);
+    if (imageInput) {
+        imageInput.addEventListener('change', handleFileSelect);
+    }
     
     // Control events
     if (widthInput) widthInput.addEventListener('input', handleDimensionChange);
@@ -214,19 +245,28 @@ function handleAspectRatioChange() {
 
 // Update quality display
 function updateQualityDisplay() {
-    qualityValue.textContent = qualitySlider.value;
+    if (qualityValue && qualitySlider) {
+        qualityValue.textContent = qualitySlider.value;
+    }
 }
 
 // Update new size display
 function updateNewSizeDisplay() {
-    const width = parseInt(widthInput.value);
-    const height = parseInt(heightInput.value);
-    newSize.textContent = `${width} × ${height}px`;
+    if (widthInput && heightInput && newSize) {
+        const width = parseInt(widthInput.value);
+        const height = parseInt(heightInput.value);
+        newSize.textContent = `${width} × ${height}px`;
+    }
 }
 
 // Resize image
 async function resizeImage() {
     if (!currentImage) return;
+    
+    if (!widthInput || !heightInput || !qualitySlider || !formatSelect || !resizeBtn) {
+        console.error('Required elements for resizing not found');
+        return;
+    }
     
     const width = parseInt(widthInput.value);
     const height = parseInt(heightInput.value);
@@ -328,26 +368,26 @@ function resetResizer() {
     resizedImageData = null;
     
     // Reset UI
-    imagePreview.src = '';
-    originalSize.textContent = '';
-    newSize.textContent = '';
-    widthInput.value = '';
-    heightInput.value = '';
-    qualitySlider.value = 90;
-    qualityValue.textContent = '90';
-    formatSelect.value = 'original';
-    aspectRatioCheckbox.checked = true;
+    if (imagePreview) imagePreview.src = '';
+    if (originalSize) originalSize.textContent = '';
+    if (newSize) newSize.textContent = '';
+    if (widthInput) widthInput.value = '';
+    if (heightInput) heightInput.value = '';
+    if (qualitySlider) qualitySlider.value = 90;
+    if (qualityValue) qualityValue.textContent = '90';
+    if (formatSelect) formatSelect.value = 'original';
+    if (aspectRatioCheckbox) aspectRatioCheckbox.checked = true;
     
     // Hide controls
-    resizerControls.style.display = 'none';
-    uploadArea.style.display = 'block';
+    if (resizerControls) resizerControls.style.display = 'none';
+    if (uploadArea) uploadArea.style.display = 'block';
     
     // Reset buttons
-    resizeBtn.disabled = false;
-    downloadBtn.disabled = true;
+    if (resizeBtn) resizeBtn.disabled = false;
+    if (downloadBtn) downloadBtn.disabled = true;
     
     // Clear file input
-    imageInput.value = '';
+    if (imageInput) imageInput.value = '';
     
     showSuccess('Resizer reset successfully!');
 }

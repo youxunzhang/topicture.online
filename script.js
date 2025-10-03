@@ -2,11 +2,14 @@
 let currentImage = null;
 let originalImageData = null;
 let resizedImageData = null;
+let generatedTextImageData = null;
 
 // DOM elements (will be initialized after DOM loads)
 let uploadArea, imageInput, resizerControls, imagePreview, originalSize, newSize;
 let widthInput, heightInput, aspectRatioCheckbox, qualitySlider, qualityValue;
 let formatSelect, resizeBtn, downloadBtn, resetBtn;
+let promptInput, textWidthInput, textHeightInput, textFormatSelect, textGenerateBtn, textDownloadBtn;
+let textPreviewImage, textPreviewPlaceholder, textPreviewSize, textPreviewFormat;
 let hamburger, navMenu;
 
 // Initialize the application
@@ -35,7 +38,17 @@ function initializeDOMElements() {
     resetBtn = document.getElementById('resetBtn');
     hamburger = document.querySelector('.hamburger');
     navMenu = document.querySelector('.nav-menu');
-    
+    promptInput = document.getElementById('promptInput');
+    textWidthInput = document.getElementById('textWidthInput');
+    textHeightInput = document.getElementById('textHeightInput');
+    textFormatSelect = document.getElementById('textFormatSelect');
+    textGenerateBtn = document.getElementById('textGenerateBtn');
+    textDownloadBtn = document.getElementById('textDownloadBtn');
+    textPreviewImage = document.getElementById('textPreviewImage');
+    textPreviewPlaceholder = document.getElementById('textPreviewPlaceholder');
+    textPreviewSize = document.getElementById('textPreviewSize');
+    textPreviewFormat = document.getElementById('textPreviewFormat');
+
     // Debug: Log which elements were found
     console.log('DOM Elements initialized:', {
         uploadArea: !!uploadArea,
@@ -54,7 +67,14 @@ function initializeDOMElements() {
         downloadBtn: !!downloadBtn,
         resetBtn: !!resetBtn,
         hamburger: !!hamburger,
-        navMenu: !!navMenu
+        navMenu: !!navMenu,
+        promptInput: !!promptInput,
+        textWidthInput: !!textWidthInput,
+        textHeightInput: !!textHeightInput,
+        textFormatSelect: !!textFormatSelect,
+        textGenerateBtn: !!textGenerateBtn,
+        textDownloadBtn: !!textDownloadBtn,
+        textPreviewImage: !!textPreviewImage
     });
 }
 
@@ -67,35 +87,34 @@ function initializeEventListeners() {
             imageInput: !!imageInput,
             resizerControls: !!resizerControls
         });
-        return;
-    }
-    
-    // Upload area events
-    if (uploadArea) {
+    } else {
+        // Upload area events
         uploadArea.addEventListener('click', () => {
             if (imageInput) imageInput.click();
         });
         uploadArea.addEventListener('dragover', handleDragOver);
         uploadArea.addEventListener('dragleave', handleDragLeave);
         uploadArea.addEventListener('drop', handleDrop);
-    }
-    
-    // File input event
-    if (imageInput) {
+
+        // File input event
         imageInput.addEventListener('change', handleFileSelect);
+
+        // Control events
+        if (widthInput) widthInput.addEventListener('input', handleDimensionChange);
+        if (heightInput) heightInput.addEventListener('input', handleDimensionChange);
+        if (aspectRatioCheckbox) aspectRatioCheckbox.addEventListener('change', handleAspectRatioChange);
+        if (qualitySlider) qualitySlider.addEventListener('input', updateQualityDisplay);
+
+        // Button events
+        if (resizeBtn) resizeBtn.addEventListener('click', resizeImage);
+        if (downloadBtn) downloadBtn.addEventListener('click', downloadImage);
+        if (resetBtn) resetBtn.addEventListener('click', resetResizer);
     }
-    
-    // Control events
-    if (widthInput) widthInput.addEventListener('input', handleDimensionChange);
-    if (heightInput) heightInput.addEventListener('input', handleDimensionChange);
-    if (aspectRatioCheckbox) aspectRatioCheckbox.addEventListener('change', handleAspectRatioChange);
-    if (qualitySlider) qualitySlider.addEventListener('input', updateQualityDisplay);
-    
-    // Button events
-    if (resizeBtn) resizeBtn.addEventListener('click', resizeImage);
-    if (downloadBtn) downloadBtn.addEventListener('click', downloadImage);
-    if (resetBtn) resetBtn.addEventListener('click', resetResizer);
-    
+
+    // Text to picture events
+    if (textGenerateBtn) textGenerateBtn.addEventListener('click', generateTextToImage);
+    if (textDownloadBtn) textDownloadBtn.addEventListener('click', downloadGeneratedTextImage);
+
     console.log('Event listeners initialized successfully');
 }
 
@@ -257,6 +276,214 @@ function updateNewSizeDisplay() {
         const height = parseInt(heightInput.value);
         newSize.textContent = `${width} × ${height}px`;
     }
+}
+
+// Generate text to picture image
+function generateTextToImage(event) {
+    if (event) event.preventDefault();
+
+    if (!promptInput || !textWidthInput || !textHeightInput || !textFormatSelect || !textGenerateBtn) {
+        showError('Text to picture controls are not ready.');
+        return;
+    }
+
+    const prompt = promptInput.value.trim();
+    if (!prompt) {
+        showError('Please enter a description to turn into an image.');
+        return;
+    }
+
+    const width = parseInt(textWidthInput.value, 10) || 1024;
+    const height = parseInt(textHeightInput.value, 10) || 1024;
+
+    if (width < 256 || width > 2048 || height < 256 || height > 2048) {
+        showError('Image dimensions must be between 256 and 2048 pixels.');
+        return;
+    }
+
+    const selectedFormat = textFormatSelect.value === 'png' ? 'image/png' : 'image/jpeg';
+
+    if (textDownloadBtn) {
+        textDownloadBtn.disabled = true;
+    }
+
+    const canvas = document.createElement('canvas');
+    canvas.width = width;
+    canvas.height = height;
+    const ctx = canvas.getContext('2d');
+
+    const originalButtonContent = textGenerateBtn.innerHTML;
+    textGenerateBtn.innerHTML = '<div class="loading"></div> Rendering...';
+    textGenerateBtn.disabled = true;
+
+    // Create background gradient based on the prompt
+    const gradient = createPromptGradient(ctx, width, height, prompt);
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, width, height);
+
+    // Overlay for better contrast
+    const overlay = ctx.createLinearGradient(0, 0, 0, height);
+    overlay.addColorStop(0, 'rgba(0, 0, 0, 0.15)');
+    overlay.addColorStop(1, 'rgba(0, 0, 0, 0.45)');
+    ctx.fillStyle = overlay;
+    ctx.fillRect(0, 0, width, height);
+
+    const padding = Math.round(Math.min(width, height) * 0.08);
+    const fontSize = Math.max(24, Math.min(Math.round(Math.min(width, height) / 8), 72));
+    const lineHeight = Math.round(fontSize * 1.35);
+    const textFont = `600 ${fontSize}px "Inter", "Segoe UI", sans-serif`;
+    const footerFontSize = Math.max(16, Math.round(fontSize * 0.45));
+    const maxTextBottom = height - footerFontSize - padding * 1.5;
+
+    ctx.font = textFont;
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.95)';
+    ctx.textBaseline = 'top';
+
+    const maxTextWidth = width - padding * 2;
+    const lines = wrapPromptText(ctx, prompt, maxTextWidth);
+    let currentY = padding;
+
+    for (const line of lines) {
+        if (currentY + lineHeight > maxTextBottom) {
+            ctx.fillText('…', padding, currentY);
+            break;
+        }
+        ctx.fillText(line, padding, currentY);
+        currentY += lineHeight;
+    }
+
+    // Add footer branding
+    ctx.font = `500 ${footerFontSize}px "Inter", "Segoe UI", sans-serif`;
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.75)';
+    const footerText = 'Generated with topicture.online';
+    const footerWidth = ctx.measureText(footerText).width;
+    ctx.fillText(footerText, width - footerWidth - padding, height - footerFontSize - padding);
+
+    canvas.toBlob(blob => {
+        textGenerateBtn.innerHTML = originalButtonContent;
+        textGenerateBtn.disabled = false;
+
+        if (!blob) {
+            showError('Failed to render the picture. Please try again.');
+            if (generatedTextImageData && textDownloadBtn) {
+                textDownloadBtn.disabled = false;
+            }
+            return;
+        }
+
+        if (generatedTextImageData && generatedTextImageData.url) {
+            URL.revokeObjectURL(generatedTextImageData.url);
+        }
+
+        const url = URL.createObjectURL(blob);
+        generatedTextImageData = {
+            blob: blob,
+            url: url,
+            width: width,
+            height: height,
+            format: selectedFormat
+        };
+
+        if (textPreviewImage) {
+            textPreviewImage.src = url;
+            textPreviewImage.style.display = 'block';
+        }
+        if (textPreviewPlaceholder) {
+            textPreviewPlaceholder.style.display = 'none';
+        }
+
+        updateTextPreviewMeta(width, height, selectedFormat);
+
+        if (textDownloadBtn) {
+            textDownloadBtn.disabled = false;
+        }
+
+        showSuccess('Image generated successfully!');
+    }, selectedFormat, selectedFormat === 'image/png' ? undefined : 0.92);
+}
+
+function downloadGeneratedTextImage(event) {
+    if (event) event.preventDefault();
+
+    if (!generatedTextImageData) {
+        showError('Please create an image before downloading.');
+        return;
+    }
+
+    const link = document.createElement('a');
+    link.href = generatedTextImageData.url;
+    link.download = `text-to-picture-${generatedTextImageData.width}x${generatedTextImageData.height}.${getFileExtension(generatedTextImageData.format)}`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    showSuccess('Image downloaded successfully!');
+}
+
+function updateTextPreviewMeta(width, height, mimeType) {
+    if (textPreviewSize) {
+        textPreviewSize.textContent = `${width} × ${height}px`;
+    }
+    if (textPreviewFormat) {
+        const labels = {
+            'image/png': 'PNG Image',
+            'image/jpeg': 'JPEG Image'
+        };
+        textPreviewFormat.textContent = labels[mimeType] || mimeType;
+    }
+}
+
+function createPromptGradient(ctx, width, height, prompt) {
+    const seed = Array.from(prompt).reduce((acc, char) => {
+        return acc + char.charCodeAt(0);
+    }, 0);
+    const hue = Math.abs(seed * 3) % 360;
+    const gradient = ctx.createLinearGradient(0, 0, width, height);
+    gradient.addColorStop(0, `hsl(${hue}, 75%, 55%)`);
+    gradient.addColorStop(1, `hsl(${(hue + 120) % 360}, 70%, 45%)`);
+    return gradient;
+}
+
+function wrapPromptText(ctx, text, maxWidth) {
+    const words = text.split(/\s+/);
+    const lines = [];
+    let currentLine = '';
+
+    words.forEach(word => {
+        const testLine = currentLine ? `${currentLine} ${word}` : word;
+        const metrics = ctx.measureText(testLine);
+        if (metrics.width <= maxWidth) {
+            currentLine = testLine;
+        } else {
+            if (currentLine) {
+                lines.push(currentLine);
+            }
+
+            if (ctx.measureText(word).width > maxWidth) {
+                let trimmedWord = '';
+                for (const char of word) {
+                    const testWord = trimmedWord + char;
+                    if (ctx.measureText(testWord).width <= maxWidth) {
+                        trimmedWord = testWord;
+                    } else {
+                        if (trimmedWord) {
+                            lines.push(trimmedWord);
+                        }
+                        trimmedWord = char;
+                    }
+                }
+                currentLine = trimmedWord;
+            } else {
+                currentLine = word;
+            }
+        }
+    });
+
+    if (currentLine) {
+        lines.push(currentLine);
+    }
+
+    return lines.slice(0, 12);
 }
 
 // Resize image
@@ -498,6 +725,16 @@ function scrollToResizer() {
         behavior: 'smooth',
         block: 'start'
     });
+}
+
+function scrollToTextGenerator() {
+    const section = document.getElementById('text-to-picture');
+    if (section) {
+        section.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+        });
+    }
 }
 
 function scrollToFeatures() {

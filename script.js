@@ -278,6 +278,21 @@ function updateNewSizeDisplay() {
     }
 }
 
+async function createCanvasBlob(canvas, mimeType, quality) {
+    if (typeof canvas.toBlob !== 'function') {
+        return null;
+    }
+
+    return await new Promise(resolve => {
+        try {
+            canvas.toBlob(resolve, mimeType, quality);
+        } catch (error) {
+            console.error('canvas.toBlob error:', error);
+            resolve(null);
+        }
+    });
+}
+
 // Generate text to picture image
 function generateTextToImage(event) {
     if (event) event.preventDefault();
@@ -489,7 +504,7 @@ function wrapPromptText(ctx, text, maxWidth) {
 // Resize image
 async function resizeImage() {
     if (!currentImage) return;
-    
+
     if (!widthInput || !heightInput || !qualitySlider || !formatSelect || !resizeBtn) {
         console.error('Required elements for resizing not found');
         return;
@@ -515,13 +530,20 @@ async function resizeImage() {
         // Create canvas for resizing
         const canvas = document.createElement('canvas');
         const ctx = canvas.getContext('2d');
-        
+
         canvas.width = width;
         canvas.height = height;
-        
+
+        if (!ctx) {
+            throw new Error('Unable to access the canvas context.');
+        }
+
+        ctx.imageSmoothingEnabled = true;
+        ctx.imageSmoothingQuality = 'high';
+
         // Draw resized image
         ctx.drawImage(currentImage, 0, 0, width, height);
-        
+
         // Convert to desired format
         let mimeType = 'image/jpeg';
         if (format === 'png') {
@@ -532,19 +554,46 @@ async function resizeImage() {
             // Keep original format
             mimeType = currentImage.src.split(';')[0].split(':')[1];
         }
-        
+
         // Convert to blob
-        const blob = await new Promise(resolve => {
-            canvas.toBlob(resolve, mimeType, quality);
-        });
-        
+        let blob = await createCanvasBlob(canvas, mimeType, quality);
+        let outputMimeType = mimeType;
+
+        if (!blob) {
+            const fallbackMimeType = 'image/png';
+            if (mimeType !== fallbackMimeType) {
+                outputMimeType = fallbackMimeType;
+                blob = await createCanvasBlob(canvas, outputMimeType);
+
+                if (blob) {
+                    if (formatSelect) {
+                        formatSelect.value = 'png';
+                    }
+
+                    const warningMessage = mimeType === 'image/webp'
+                        ? 'WebP export is not supported in this browser. The image has been saved as PNG instead.'
+                        : 'The selected export format is not supported in this browser. The image has been saved as PNG instead.';
+
+                    showWarning(warningMessage);
+                }
+            }
+        }
+
+        if (!blob) {
+            throw new Error('Failed to process the image with the selected format.');
+        }
+
+        if (resizedImageData && resizedImageData.url) {
+            URL.revokeObjectURL(resizedImageData.url);
+        }
+
         // Create object URL
         resizedImageData = {
             blob: blob,
             url: URL.createObjectURL(blob),
             width: width,
             height: height,
-            format: mimeType,
+            format: outputMimeType,
             fileSize: getFileSizeString(blob)
         };
         
@@ -576,7 +625,7 @@ async function resizeImage() {
 // Download resized image
 function downloadImage() {
     if (!resizedImageData) return;
-    
+
     const link = document.createElement('a');
     link.href = resizedImageData.url;
     link.download = `resized-image-${resizedImageData.width}x${resizedImageData.height}.${getFileExtension(resizedImageData.format)}`;
@@ -654,27 +703,47 @@ function showSuccess(message) {
     showNotification(message, 'success');
 }
 
+function showWarning(message) {
+    showNotification(message, 'warning');
+}
+
 function showNotification(message, type) {
     // Remove existing notifications
     const existingNotifications = document.querySelectorAll('.notification');
     existingNotifications.forEach(notification => notification.remove());
-    
+
     // Create notification element
     const notification = document.createElement('div');
     notification.className = `notification notification-${type}`;
+
+    const iconMap = {
+        success: 'fa-check-circle',
+        error: 'fa-exclamation-circle',
+        warning: 'fa-exclamation-triangle'
+    };
+
+    const colorMap = {
+        success: '#10b981',
+        error: '#ef4444',
+        warning: '#f59e0b'
+    };
+
+    const iconClass = iconMap[type] || iconMap.success;
+    const backgroundColor = colorMap[type] || colorMap.success;
+
     notification.innerHTML = `
         <div class="notification-content">
-            <i class="fas ${type === 'error' ? 'fa-exclamation-circle' : 'fa-check-circle'}"></i>
+            <i class="fas ${iconClass}"></i>
             <span>${message}</span>
         </div>
     `;
-    
+
     // Add styles
     notification.style.cssText = `
         position: fixed;
         top: 100px;
         right: 20px;
-        background: ${type === 'error' ? '#ef4444' : '#10b981'};
+        background: ${backgroundColor};
         color: white;
         padding: 1rem 1.5rem;
         border-radius: 12px;

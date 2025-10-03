@@ -237,11 +237,15 @@
                 <h1 class="hero-title">Text to Picture Online Generator</h1>
                 <p class="hero-subtitle">Create stunning visuals from your words with our AI-powered text to picture generator. Type a prompt, choose your style, and instantly transform your ideas into downloadable images without signing up.</p>
                 <div class="hero-buttons">
-                    <button class="btn btn-primary" onclick="scrollToResizer()">
+                    <button class="btn btn-primary" onclick="scrollToTextGenerator()">
+                        <i class="fas fa-wand-magic-sparkles"></i>
+                        Generate Picture
+                    </button>
+                    <button class="btn btn-secondary" onclick="scrollToResizer()">
                         <i class="fas fa-upload"></i>
                         Start Resizing
                     </button>
-                    <button class="btn btn-secondary" onclick="scrollToFeatures()">
+                    <button class="btn btn-outline" onclick="scrollToFeatures()">
                         <i class="fas fa-info-circle"></i>
                         Learn More
                     </button>
@@ -251,6 +255,66 @@
                 <div class="image-placeholder">
                     <i class="fas fa-image"></i>
                     <p>Your Image Here</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Text to Picture Generator -->
+    <section class="text2picture-section" id="text-to-picture">
+        <div class="container">
+            <div class="section-heading">
+                <h2 class="section-title">Turn Text Into Downloadable Pictures</h2>
+                <p class="section-subtitle">Describe your idea, choose the canvas size and export format, then instantly
+                    download a stylized image that visualizes your text.</p>
+            </div>
+            <div class="text2picture-container">
+                <div class="text2picture-form">
+                    <div class="form-group">
+                        <label for="promptInput">Text Prompt</label>
+                        <textarea id="promptInput" rows="6" placeholder="Describe the image you want to create. Include subjects, colors, mood, and any details you love."></textarea>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="textWidthInput">Width (px)</label>
+                            <input type="number" id="textWidthInput" min="256" max="2048" value="1024">
+                        </div>
+                        <div class="form-group">
+                            <label for="textHeightInput">Height (px)</label>
+                            <input type="number" id="textHeightInput" min="256" max="2048" value="1024">
+                        </div>
+                        <div class="form-group">
+                            <label for="textFormatSelect">Image Type</label>
+                            <select id="textFormatSelect">
+                                <option value="png">PNG</option>
+                                <option value="jpeg">JPEG</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button class="btn btn-primary" id="textGenerateBtn" type="button">
+                            <i class="fas fa-wand-magic"></i>
+                            Create Picture
+                        </button>
+                        <button class="btn btn-secondary" id="textDownloadBtn" type="button" disabled>
+                            <i class="fas fa-download"></i>
+                            Download Image
+                        </button>
+                    </div>
+                    <p class="form-hint">Tip: Longer prompts with clear visual directions yield richer artwork.</p>
+                </div>
+                <div class="text2picture-preview">
+                    <div class="preview-frame">
+                        <img id="textPreviewImage" alt="Generated from text" loading="lazy">
+                        <div class="preview-placeholder" id="textPreviewPlaceholder">
+                            <i class="fas fa-sparkles"></i>
+                            <p>Your generated image will appear here.</p>
+                        </div>
+                    </div>
+                    <ul class="preview-meta" id="textPreviewMeta">
+                        <li><i class="fas fa-expand"></i><span id="textPreviewSize">-- × -- px</span></li>
+                        <li><i class="fas fa-file-image"></i><span id="textPreviewFormat">Select an image type</span></li>
+                    </ul>
                 </div>
             </div>
         </div>

@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Primary Meta Tags -->
+    <title>Minimal Poster Generator – Create Clean Social Media Posters</title>
+    <meta name="title" content="Minimal Poster Generator – Create Clean Social Media Posters">
+    <meta name="description" content="Create centered, minimal posters from text. Export high-resolution PNGs for social media. No sign-up required.">
+    <meta name="keywords" content="poster generator, minimal poster, social media poster, text poster, png export, wechat moments, instagram post, twitter image">
+    <meta name="author" content="TopicPicture">
+    <meta name="robots" content="index, follow">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://topicture.online/poster-generator.html">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://topicture.online/poster-generator.html">
+    <meta property="og:title" content="Minimal Poster Generator – Create Clean Social Media Posters">
+    <meta property="og:description" content="Create centered, minimal posters from text. Export high-resolution PNGs for social media. No sign-up required.">
+    <meta property="og:image" content="https://topicture.online/og-image.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://topicture.online/poster-generator.html">
+    <meta property="twitter:title" content="Minimal Poster Generator – Create Clean Social Media Posters">
+    <meta property="twitter:description" content="Create centered, minimal posters from text. Export high-resolution PNGs for social media. No sign-up required.">
+    <meta property="twitter:image" content="https://topicture.online/twitter-image.jpg">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-image"></i>
+                <span>TopicPicture</span>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="resizer.html" class="nav-link">Image Resizer</a>
+                </li>
+                <li class="nav-item">
+                    <a href="poster-generator.html" class="nav-link active">Poster Generator</a>
+                </li>
+                <li class="nav-item">
+                    <a href="about.html" class="nav-link">About</a>
+                </li>
+                <li class="nav-item">
+                    <a href="features.html" class="nav-link">Features</a>
+                </li>
+                <li class="nav-item">
+                    <a href="contact.html" class="nav-link">Contact</a>
+                </li>
+                <li class="nav-item">
+                    <a href="faq.html" class="nav-link">FAQ</a>
+                </li>
+            </ul>
+            <div class="nav-actions">
+                <button class="bookmark-btn" onclick="bookmarkPage()" title="Bookmark this page">
+                    <i class="fas fa-bookmark"></i>
+                </button>
+                <button class="share-btn" onclick="sharePage()" title="Share this page">
+                    <i class="fas fa-share-alt"></i>
+                </button>
+            </div>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="page-hero">
+        <div class="container">
+            <h1>Minimal Poster Generator</h1>
+            <p>Turn text into clean, centered posters for social media. Choose a size, pick a font, and export a crisp PNG in seconds.</p>
+        </div>
+    </section>
+
+    <!-- Poster Generator -->
+    <section class="poster-generator-section">
+        <div class="container">
+            <div class="section-heading">
+                <h2 class="section-title">Create a Poster in Under 30 Seconds</h2>
+                <p class="section-subtitle">Write your title and subtitle, select a social media size, and download a pixel-perfect PNG.</p>
+            </div>
+            <div class="poster-layout">
+                <div class="poster-controls">
+                    <div class="form-group">
+                        <label for="posterText">Poster Text</label>
+                        <textarea id="posterText" rows="6" placeholder="Main title line\nSubtitle line\nAnother subtitle"></textarea>
+                        <p class="form-hint">Line 1 is the main title. Lines 2+ are subtitles.</p>
+                    </div>
+                    <div class="poster-form-row">
+                        <div class="form-group">
+                            <label for="posterSize">Social Media Size</label>
+                            <select id="posterSize">
+                                <option value="wechat">WeChat Moments (1080 × 1920)</option>
+                                <option value="instagram">Instagram Post (1080 × 1080)</option>
+                                <option value="twitter">X (Twitter) (1200 × 675)</option>
+                                <option value="pinterest">Pinterest (1000 × 1500)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="posterFont">Font Family</label>
+                            <select id="posterFont">
+                                <option value="'Inter', sans-serif">Inter</option>
+                                <option value="'Noto Sans SC', sans-serif">Noto Sans SC</option>
+                                <option value="'Noto Serif SC', serif">Noto Serif SC</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="poster-form-row">
+                        <div class="form-group">
+                            <label for="posterBackground">Background Color</label>
+                            <input type="color" id="posterBackground" value="#ffffff">
+                        </div>
+                        <div class="form-group">
+                            <label>Current Size</label>
+                            <div class="poster-size-pill" id="posterSizeLabel">1080 × 1920</div>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button class="btn btn-primary" id="posterExportBtn" type="button">
+                            <i class="fas fa-download"></i>
+                            Export PNG
+                        </button>
+                    </div>
+                    <p class="form-hint">Your download will be named <strong>poster-{width}x{height}.png</strong>.</p>
+                </div>
+                <div class="poster-preview">
+                    <div class="poster-preview-frame">
+                        <canvas id="posterCanvas" width="1080" height="1920" aria-label="Poster preview"></canvas>
+                    </div>
+                    <ul class="poster-meta">
+                        <li><i class="fas fa-expand"></i><span id="posterMetaSize">1080 × 1920 px</span></li>
+                        <li><i class="fas fa-font"></i><span id="posterMetaFont">Inter</span></li>
+                        <li><i class="fas fa-palette"></i><span id="posterMetaBg">#FFFFFF</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How it Works -->
+    <section class="info-section alt">
+        <div class="container">
+            <h2 class="section-title">How It Works</h2>
+            <ol class="info-steps">
+                <li><strong>Type your copy:</strong> Add a main title on line 1, then any subtitles on the next lines.</li>
+                <li><strong>Pick a layout size:</strong> Choose a preset for WeChat, Instagram, X, or Pinterest.</li>
+                <li><strong>Export instantly:</strong> Download a pixel-perfect PNG ready to post.</li>
+            </ol>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq-section">
+        <div class="container">
+            <div class="section-heading">
+                <h2 class="section-title">FAQ</h2>
+                <p class="section-subtitle">Everything you need to know before exporting your poster.</p>
+            </div>
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Can I edit fonts or sizes manually?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>No. Font sizes are auto-calculated to keep every poster balanced and centered.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Does the exported PNG match the selected size?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes. The PNG uses the exact pixel dimensions of the preset you select.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Can I use these posters commercially?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Absolutely. The included Google Fonts are free for commercial use.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Do you store my text or posters?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>No. Everything runs locally in your browser and nothing is uploaded.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <i class="fas fa-image"></i>
+                        <span>TopicPicture</span>
+                    </div>
+                    <p>TopicPicture is a free online AI tool that helps users convert text descriptions into images.</p>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="resizer.html">Image Resizer</a></li>
+                        <li><a href="poster-generator.html">Poster Generator</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="features.html">Features</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                        <li><a href="terms.html">Terms of Service</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Connect</h4>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2024 TopicPicture. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="poster.js"></script>
+</body>
+</html>

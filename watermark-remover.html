@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Online Image Resizer Tool - Resize Images Without Losing Quality</title>
-    <meta name="description" content="Resize images online without losing quality. Upload a JPG, PNG, GIF, or WebP file, set your dimensions, and download a crisp resized image instantly.">
-    <meta name="keywords" content="online image resizer, resize images without losing quality, resize photo online, resize jpeg, resize png, resize webp, image size reducer">
-    <link rel="canonical" href="https://topicture.online/resizer.html">
+    <title>Remove Watermark (Crop) – Free Online Tool</title>
+    <meta name="description" content="Remove watermarks by cropping or covering areas for images you own or have permission to edit. Export PNG, JPG, or WebP locally with no signup.">
+    <meta name="keywords" content="remove watermark, crop watermark, watermark remover, cover watermark, blur watermark, image crop tool">
+    <link rel="canonical" href="https://topicture.online/watermark-remover.html">
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -24,10 +24,10 @@
                     <a href="index.html" class="nav-link">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a href="resizer.html" class="nav-link active">Image Resizer</a>
+                    <a href="resizer.html" class="nav-link">Image Resizer</a>
                 </li>
                 <li class="nav-item">
-                    <a href="watermark-remover.html" class="nav-link">Watermark Remover</a>
+                    <a href="watermark-remover.html" class="nav-link active">Watermark Remover</a>
                 </li>
                 <li class="nav-item">
                     <a href="poster-generator.html" class="nav-link">Poster Generator</a>
@@ -56,93 +56,122 @@
     <!-- Hero Section -->
     <section class="page-hero">
         <div class="container">
-            <h1>Online Image Resizer Tool</h1>
-            <p>Resize images without losing quality. Adjust dimensions, choose output format, and download instantly.</p>
+            <h1>Remove Watermark (Crop) – Free Online Tool</h1>
+            <p>Remove watermarks by cropping or covering areas for images you own or have permission to edit.</p>
         </div>
     </section>
 
     <section class="info-section alt">
         <div class="container">
-            <h2 class="section-title">Resize Images in Three Simple Steps</h2>
+            <h2 class="section-title">Fast, Private, and Safe</h2>
             <ul class="info-benefits">
-                <li>Upload a JPG, PNG, GIF, or WebP image directly from your device.</li>
-                <li>Set new dimensions or keep the aspect ratio for perfect proportions.</li>
-                <li>Download the resized image with preserved clarity and control over quality.</li>
+                <li>Free to use with no signup or upload required.</li>
+                <li>Runs locally in your browser to protect privacy.</li>
+                <li>Export in PNG, JPG, or WebP with adjustable quality.</li>
             </ul>
         </div>
     </section>
 
-    <!-- Image Resizer Tool -->
-    <section class="resizer-section" id="resizer">
+    <!-- Watermark Remover Tool -->
+    <section class="resizer-section watermark-section" id="watermark-remover">
         <div class="container">
-            <h2 class="section-title">Online Image Resizer Tool - Resize Images Without Losing Quality</h2>
+            <h2 class="section-title">Crop or Cover a Watermark in Seconds</h2>
             <div class="resizer-container">
-                <div class="upload-area" id="uploadArea">
+                <div class="upload-area" id="watermarkUploadArea">
                     <div class="upload-content">
                         <i class="fas fa-cloud-upload-alt"></i>
                         <h3>Drop your image here or click to browse</h3>
-                        <p>Supports JPG, PNG, GIF, WebP formats - Resize JPEG image online, resize PNG online, compress image online</p>
-                        <input type="file" id="imageInput" accept="image/*" hidden>
+                        <p>Supports JPG, PNG, WebP formats. Edit only images you own or have permission to use.</p>
+                        <input type="file" id="watermarkImageInput" accept="image/*" hidden>
                     </div>
                 </div>
 
-                <div class="resizer-controls" id="resizerControls" style="display: none;">
-                    <div class="image-preview-container">
-                        <div class="image-preview" id="imagePreview">
-                            <img id="previewImage" alt="Preview">
+                <div class="resizer-controls watermark-controls" id="watermarkControls" style="display: none;">
+                    <div class="image-preview-container watermark-preview">
+                        <div class="watermark-canvas-wrap">
+                            <canvas id="watermarkCanvas"></canvas>
                         </div>
-                        <div class="image-info">
-                            <span id="originalSize"></span>
-                            <span id="newSize"></span>
+                        <div class="image-info watermark-info">
+                            <span id="watermarkOriginalSize"></span>
+                            <span id="watermarkSelectionSize">Selection: --</span>
                         </div>
                     </div>
 
                     <div class="controls-panel">
                         <div class="control-group">
-                            <label for="widthInput">Width (px)</label>
-                            <input type="number" id="widthInput" min="1" max="10000">
+                            <label>Mode</label>
+                            <div class="toggle-group" role="group" aria-label="Mode">
+                                <button class="toggle-btn active" type="button" data-mode="crop">Crop</button>
+                                <button class="toggle-btn" type="button" data-mode="cover">Cover/Blur</button>
+                            </div>
                         </div>
 
                         <div class="control-group">
-                            <label for="heightInput">Height (px)</label>
-                            <input type="number" id="heightInput" min="1" max="10000">
-                        </div>
-
-                        <div class="control-group">
-                            <label for="aspectRatio">
-                                <input type="checkbox" id="aspectRatio" checked>
+                            <label for="watermarkAspectRatio">
+                                <input type="checkbox" id="watermarkAspectRatio">
                                 Maintain Aspect Ratio
                             </label>
+                            <select id="watermarkRatioSelect">
+                                <option value="free">Free</option>
+                                <option value="original">Original</option>
+                                <option value="1:1">1:1</option>
+                                <option value="4:3">4:3</option>
+                                <option value="16:9">16:9</option>
+                            </select>
+                        </div>
+
+                        <div class="control-group" id="coverOptions" style="display: none;">
+                            <label for="coverType">Cover Style</label>
+                            <select id="coverType">
+                                <option value="blur">Blur Area</option>
+                                <option value="solid">Solid Color</option>
+                            </select>
+                            <div class="cover-color-row">
+                                <label for="coverColor">Cover Color</label>
+                                <input type="color" id="coverColor" value="#f8fafc">
+                            </div>
                         </div>
 
                         <div class="control-group">
-                            <label for="qualitySlider">Quality: <span id="qualityValue">90</span>%</label>
-                            <input type="range" id="qualitySlider" min="10" max="100" value="90">
+                            <label for="watermarkQuality">Quality: <span id="watermarkQualityValue">90</span>%</label>
+                            <input type="range" id="watermarkQuality" min="60" max="100" value="90">
                         </div>
 
                         <div class="control-group">
-                            <label for="formatSelect">Output Format</label>
-                            <select id="formatSelect">
-                                <option value="original">Keep Original</option>
-                                <option value="jpeg">JPEG</option>
+                            <label for="watermarkFormat">Output Format</label>
+                            <select id="watermarkFormat">
                                 <option value="png">PNG</option>
+                                <option value="jpeg">JPG</option>
                                 <option value="webp">WebP</option>
                             </select>
                         </div>
 
                         <div class="action-buttons">
-                            <button class="btn btn-primary" id="resizeBtn">
-                                <i class="fas fa-magic"></i>
-                                Resize Image
+                            <button class="btn btn-primary" id="watermarkExportBtn">
+                                <i class="fas fa-crop-alt"></i>
+                                Export
                             </button>
-                            <button class="btn btn-secondary" id="downloadBtn" disabled>
+                            <button class="btn btn-secondary" id="watermarkDownloadBtn" disabled>
                                 <i class="fas fa-download"></i>
                                 Download
                             </button>
-                            <button class="btn btn-outline" id="resetBtn">
+                            <button class="btn btn-outline" id="watermarkClearBtn">
+                                <i class="fas fa-eraser"></i>
+                                Clear Selection
+                            </button>
+                            <button class="btn btn-outline" id="watermarkResetBtn">
                                 <i class="fas fa-refresh"></i>
                                 Reset
                             </button>
+                        </div>
+
+                        <div class="output-preview" id="watermarkOutputPreview" style="display: none;">
+                            <h4>Output Preview</h4>
+                            <img id="watermarkOutputImage" alt="Output preview">
+                        </div>
+
+                        <div class="disclaimer">
+                            <strong>Disclaimer:</strong> This tool only edits images you own or have permission to modify.
                         </div>
                     </div>
                 </div>
@@ -152,11 +181,11 @@
 
     <section class="info-section">
         <div class="container">
-            <h2 class="section-title">Why Use This Image Resizer?</h2>
+            <h2 class="section-title">Why This Watermark Remover?</h2>
             <ul class="info-benefits">
-                <li>Local processing keeps your images private and secure.</li>
-                <li>Precision controls for width, height, and output quality.</li>
-                <li>Fast results for web, social media, and email-ready images.</li>
+                <li>Simple crop or cover workflows—no AI reconstruction.</li>
+                <li>Fast export with full control over format and quality.</li>
+                <li>Works on desktop and mobile with drag-and-drop support.</li>
             </ul>
         </div>
     </section>
@@ -213,6 +242,6 @@
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="watermark-remover.js"></script>
 </body>
 </html>

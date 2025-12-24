@@ -440,6 +440,104 @@ body {
     align-items: start;
 }
 
+/* Watermark Remover */
+.watermark-section .resizer-controls {
+    grid-template-columns: 1.2fr 0.8fr;
+}
+
+.watermark-preview {
+    position: relative;
+}
+
+.watermark-canvas-wrap {
+    width: 100%;
+    background: white;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+}
+
+.watermark-canvas-wrap canvas {
+    width: 100%;
+    height: auto;
+    display: block;
+    cursor: crosshair;
+}
+
+.watermark-info {
+    margin-top: 1rem;
+    gap: 1rem;
+}
+
+.toggle-group {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.toggle-btn {
+    border: 2px solid var(--border-color);
+    background: white;
+    color: var(--text-secondary);
+    padding: 0.5rem 1.25rem;
+    border-radius: 999px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.toggle-btn.active {
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+    color: white;
+}
+
+.toggle-btn:hover {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+.cover-color-row {
+    margin-top: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.cover-color-row input[type=\"color\"] {
+    width: 64px;
+    height: 40px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+}
+
+.output-preview {
+    margin-top: 2rem;
+    background: white;
+    border-radius: var(--border-radius);
+    padding: 1rem;
+    box-shadow: var(--shadow);
+    text-align: center;
+}
+
+.output-preview img {
+    max-width: 100%;
+    border-radius: var(--border-radius);
+    margin-top: 0.75rem;
+}
+
+.disclaimer {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background: rgba(99, 102, 241, 0.08);
+    border-radius: var(--border-radius);
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    border: 1px solid rgba(99, 102, 241, 0.2);
+}
+
 .image-preview-container {
     background: var(--background-alt);
     border-radius: var(--border-radius-lg);

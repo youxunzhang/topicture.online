@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Image Resizer Tool - Resize Images Without Losing Quality</title>
+    <meta name="description" content="Resize images online without losing quality. Upload a JPG, PNG, GIF, or WebP file, set your dimensions, and download a crisp resized image instantly.">
+    <meta name="keywords" content="online image resizer, resize images without losing quality, resize photo online, resize jpeg, resize png, resize webp, image size reducer">
+    <link rel="canonical" href="https://topicture.online/resizer.html">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-image"></i>
+                <span>TopicPicture</span>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="resizer.html" class="nav-link active">Image Resizer</a>
+                </li>
+                <li class="nav-item">
+                    <a href="about.html" class="nav-link">About</a>
+                </li>
+                <li class="nav-item">
+                    <a href="features.html" class="nav-link">Features</a>
+                </li>
+                <li class="nav-item">
+                    <a href="contact.html" class="nav-link">Contact</a>
+                </li>
+                <li class="nav-item">
+                    <a href="faq.html" class="nav-link">FAQ</a>
+                </li>
+            </ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="page-hero">
+        <div class="container">
+            <h1>Online Image Resizer Tool</h1>
+            <p>Resize images without losing quality. Adjust dimensions, choose output format, and download instantly.</p>
+        </div>
+    </section>
+
+    <section class="info-section alt">
+        <div class="container">
+            <h2 class="section-title">Resize Images in Three Simple Steps</h2>
+            <ul class="info-benefits">
+                <li>Upload a JPG, PNG, GIF, or WebP image directly from your device.</li>
+                <li>Set new dimensions or keep the aspect ratio for perfect proportions.</li>
+                <li>Download the resized image with preserved clarity and control over quality.</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Image Resizer Tool -->
+    <section class="resizer-section" id="resizer">
+        <div class="container">
+            <h2 class="section-title">Online Image Resizer Tool - Resize Images Without Losing Quality</h2>
+            <div class="resizer-container">
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-content">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <h3>Drop your image here or click to browse</h3>
+                        <p>Supports JPG, PNG, GIF, WebP formats - Resize JPEG image online, resize PNG online, compress image online</p>
+                        <input type="file" id="imageInput" accept="image/*" hidden>
+                    </div>
+                </div>
+
+                <div class="resizer-controls" id="resizerControls" style="display: none;">
+                    <div class="image-preview-container">
+                        <div class="image-preview" id="imagePreview">
+                            <img id="previewImage" alt="Preview">
+                        </div>
+                        <div class="image-info">
+                            <span id="originalSize"></span>
+                            <span id="newSize"></span>
+                        </div>
+                    </div>
+
+                    <div class="controls-panel">
+                        <div class="control-group">
+                            <label for="widthInput">Width (px)</label>
+                            <input type="number" id="widthInput" min="1" max="10000">
+                        </div>
+
+                        <div class="control-group">
+                            <label for="heightInput">Height (px)</label>
+                            <input type="number" id="heightInput" min="1" max="10000">
+                        </div>
+
+                        <div class="control-group">
+                            <label for="aspectRatio">
+                                <input type="checkbox" id="aspectRatio" checked>
+                                Maintain Aspect Ratio
+                            </label>
+                        </div>
+
+                        <div class="control-group">
+                            <label for="qualitySlider">Quality: <span id="qualityValue">90</span>%</label>
+                            <input type="range" id="qualitySlider" min="10" max="100" value="90">
+                        </div>
+
+                        <div class="control-group">
+                            <label for="formatSelect">Output Format</label>
+                            <select id="formatSelect">
+                                <option value="original">Keep Original</option>
+                                <option value="jpeg">JPEG</option>
+                                <option value="png">PNG</option>
+                                <option value="webp">WebP</option>
+                            </select>
+                        </div>
+
+                        <div class="action-buttons">
+                            <button class="btn btn-primary" id="resizeBtn">
+                                <i class="fas fa-magic"></i>
+                                Resize Image
+                            </button>
+                            <button class="btn btn-secondary" id="downloadBtn" disabled>
+                                <i class="fas fa-download"></i>
+                                Download
+                            </button>
+                            <button class="btn btn-outline" id="resetBtn">
+                                <i class="fas fa-refresh"></i>
+                                Reset
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="info-section">
+        <div class="container">
+            <h2 class="section-title">Why Use This Image Resizer?</h2>
+            <ul class="info-benefits">
+                <li>Local processing keeps your images private and secure.</li>
+                <li>Precision controls for width, height, and output quality.</li>
+                <li>Fast results for web, social media, and email-ready images.</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <i class="fas fa-image"></i>
+                        <span>TopicPicture</span>
+                    </div>
+                    <p>TopicPicture is an online AI-powered tool designed to help users quickly transform text ideas into visual images.</p>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="resizer.html">Image Resizer</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="features.html">Features</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                        <li><a href="terms.html">Terms of Service</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Connect</h4>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2024 TopicPicture. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -10,10 +10,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const sizeSelect = document.getElementById('posterSize');
     const fontSelect = document.getElementById('posterFont');
     const backgroundInput = document.getElementById('posterBackground');
+    const textColorInput = document.getElementById('posterTextColor');
+    const autoColorToggle = document.getElementById('posterAutoColor');
     const sizeLabel = document.getElementById('posterSizeLabel');
     const metaSize = document.getElementById('posterMetaSize');
     const metaFont = document.getElementById('posterMetaFont');
     const metaBg = document.getElementById('posterMetaBg');
+    const metaText = document.getElementById('posterMetaText');
     const exportBtn = document.getElementById('posterExportBtn');
     const canvas = document.getElementById('posterCanvas');
 
@@ -23,12 +26,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const ctx = canvas.getContext('2d');
 
-    const updateMeta = (preset) => {
+    const updateMeta = (preset, textColor) => {
         const sizeText = `${preset.width} × ${preset.height}`;
         sizeLabel.textContent = sizeText;
         metaSize.textContent = `${sizeText} px`;
         metaFont.textContent = fontSelect.options[fontSelect.selectedIndex].textContent;
         metaBg.textContent = backgroundInput.value.toUpperCase();
+        metaText.textContent = textColor.toUpperCase();
     };
 
     const getLines = () => {
@@ -95,7 +99,14 @@ document.addEventListener('DOMContentLoaded', () => {
         titleSize = Math.round(titleSize * scale);
         subtitleSize = Math.round(subtitleSize * scale);
 
-        const textColor = getTextColor(backgroundInput.value);
+        const autoTextColor = getTextColor(backgroundInput.value);
+        const textColor = autoColorToggle && autoColorToggle.checked ? autoTextColor : textColorInput.value;
+        if (autoColorToggle && autoColorToggle.checked) {
+            textColorInput.value = autoTextColor;
+            textColorInput.disabled = true;
+        } else if (textColorInput) {
+            textColorInput.disabled = false;
+        }
         ctx.fillStyle = textColor;
         ctx.textAlign = 'center';
         ctx.textBaseline = 'top';
@@ -115,7 +126,7 @@ document.addEventListener('DOMContentLoaded', () => {
             currentY += subtitleSize * 1.2 + lineGap;
         });
 
-        updateMeta(preset);
+        updateMeta(preset, textColor);
     };
 
     const handleChange = () => {
@@ -152,6 +163,12 @@ document.addEventListener('DOMContentLoaded', () => {
     sizeSelect.addEventListener('change', handleChange);
     fontSelect.addEventListener('change', handleChange);
     backgroundInput.addEventListener('input', handleChange);
+    if (textColorInput) {
+        textColorInput.addEventListener('input', handleChange);
+    }
+    if (autoColorToggle) {
+        autoColorToggle.addEventListener('change', handleChange);
+    }
     exportBtn.addEventListener('click', handleExport);
 
     document.fonts.ready.then(renderPoster);

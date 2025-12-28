@@ -10,7 +10,7 @@ let widthInput, heightInput, aspectRatioCheckbox, qualitySlider, qualityValue;
 let formatSelect, resizeBtn, downloadBtn, resetBtn;
 let promptInput, textWidthInput, textHeightInput, textFormatSelect, textGenerateBtn, textDownloadBtn;
 let textPreviewImage, textPreviewPlaceholder, textPreviewSize, textPreviewFormat;
-let textBackgroundOptions, textBackgroundColor, textBackgroundCustomPicker;
+let textBackgroundColor;
 let hamburger, navMenu;
 
 // Initialize the application
@@ -49,9 +49,7 @@ function initializeDOMElements() {
     textPreviewPlaceholder = document.getElementById('textPreviewPlaceholder');
     textPreviewSize = document.getElementById('textPreviewSize');
     textPreviewFormat = document.getElementById('textPreviewFormat');
-    textBackgroundOptions = document.querySelectorAll('input[name="textBackground"]');
     textBackgroundColor = document.getElementById('textBackgroundColor');
-    textBackgroundCustomPicker = document.getElementById('textBackgroundCustomPicker');
 
     // Debug: Log which elements were found
     console.log('DOM Elements initialized:', {
@@ -79,7 +77,6 @@ function initializeDOMElements() {
         textGenerateBtn: !!textGenerateBtn,
         textDownloadBtn: !!textDownloadBtn,
         textPreviewImage: !!textPreviewImage,
-        textBackgroundOptions: textBackgroundOptions && textBackgroundOptions.length > 0,
         textBackgroundColor: !!textBackgroundColor
     });
 }
@@ -120,16 +117,6 @@ function initializeEventListeners() {
     // Text to picture events
     if (textGenerateBtn) textGenerateBtn.addEventListener('click', generateTextToImage);
     if (textDownloadBtn) textDownloadBtn.addEventListener('click', downloadGeneratedTextImage);
-    if (textBackgroundOptions && textBackgroundOptions.length > 0) {
-        textBackgroundOptions.forEach(option => {
-            option.addEventListener('change', updateBackgroundPickerVisibility);
-        });
-    }
-    if (textBackgroundColor) {
-        textBackgroundColor.addEventListener('input', updateBackgroundPickerVisibility);
-    }
-    updateBackgroundPickerVisibility();
-
     console.log('Event listeners initialized successfully');
 }
 
@@ -347,7 +334,10 @@ function generateTextToImage(event) {
     textGenerateBtn.disabled = true;
 
     const backgroundColor = getSelectedBackgroundColor();
-    const textColors = getTextFillColors(backgroundColor);
+    const textColors = {
+        primary: '#000000',
+        secondary: 'rgba(0, 0, 0, 0.6)'
+    };
     ctx.fillStyle = backgroundColor;
     ctx.fillRect(0, 0, width, height);
 
@@ -456,72 +446,8 @@ function updateTextPreviewMeta(width, height, mimeType) {
     }
 }
 
-function updateBackgroundPickerVisibility() {
-    if (!textBackgroundCustomPicker) return;
-    const selectedOption = getSelectedBackgroundOption();
-    const shouldShow = selectedOption && selectedOption.value === 'custom';
-    textBackgroundCustomPicker.classList.toggle('active', shouldShow);
-}
-
-function getSelectedBackgroundOption() {
-    if (!textBackgroundOptions || textBackgroundOptions.length === 0) {
-        return null;
-    }
-    return Array.from(textBackgroundOptions).find(option => option.checked) || null;
-}
-
 function getSelectedBackgroundColor() {
-    const selectedOption = getSelectedBackgroundOption();
-    if (!selectedOption) {
-        return '#ffffff';
-    }
-    switch (selectedOption.value) {
-        case 'black':
-            return '#111827';
-        case 'gray':
-            return '#9ca3af';
-        case 'custom':
-            return textBackgroundColor?.value || '#ffffff';
-        case 'white':
-        default:
-            return '#ffffff';
-    }
-}
-
-function getTextFillColors(backgroundColor) {
-    const rgb = parseHexColor(backgroundColor);
-    const luminance = rgb ? getLuminance(rgb) : 1;
-    const useLightText = luminance < 0.55;
-    return useLightText
-        ? { primary: 'rgba(255, 255, 255, 0.95)', secondary: 'rgba(255, 255, 255, 0.75)' }
-        : { primary: 'rgba(15, 23, 42, 0.9)', secondary: 'rgba(15, 23, 42, 0.65)' };
-}
-
-function parseHexColor(hex) {
-    if (!hex) return null;
-    const normalized = hex.replace('#', '');
-    if (normalized.length === 3) {
-        const expanded = normalized.split('').map(char => char + char).join('');
-        return hexToRgb(expanded);
-    }
-    if (normalized.length === 6) {
-        return hexToRgb(normalized);
-    }
-    return null;
-}
-
-function hexToRgb(hex) {
-    const intVal = parseInt(hex, 16);
-    if (Number.isNaN(intVal)) return null;
-    return {
-        r: (intVal >> 16) & 255,
-        g: (intVal >> 8) & 255,
-        b: intVal & 255
-    };
-}
-
-function getLuminance({ r, g, b }) {
-    return (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+    return textBackgroundColor?.value || '#ffffff';
 }
 
 function wrapPromptText(ctx, text, maxWidth) {

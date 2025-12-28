@@ -327,21 +327,9 @@
                         </div>
                     </div>
                     <div class="preview-background">
-                        <label>Background</label>
-                        <div class="background-options" role="radiogroup" aria-label="Background color">
-                            <label class="background-option">
-                                <input type="radio" name="textBackground" value="white" checked>
-                                <span class="color-swatch swatch-white" aria-hidden="true"></span>
-                                <span>White</span>
-                            </label>
-                            <label class="background-option">
-                                <input type="radio" name="textBackground" value="custom" id="textBackgroundCustomOption">
-                                <span class="color-swatch swatch-custom" aria-hidden="true"></span>
-                                <span>Custom</span>
-                            </label>
-                        </div>
-                        <div class="custom-color-picker" id="textBackgroundCustomPicker">
-                            <input type="color" id="textBackgroundColor" value="#ffffff" aria-label="Custom background color">
+                        <label for="textBackgroundColor">Background Color</label>
+                        <div class="custom-color-picker">
+                            <input type="color" id="textBackgroundColor" value="#ffffff" aria-label="Background color">
                         </div>
                     </div>
                     <ul class="preview-meta" id="textPreviewMeta">

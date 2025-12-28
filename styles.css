@@ -298,13 +298,9 @@ body {
 
 .custom-color-picker {
     margin-top: 0.75rem;
-    display: none;
+    display: flex;
     align-items: center;
     gap: 0.5rem;
-}
-
-.custom-color-picker.active {
-    display: flex;
 }
 
 .custom-color-picker input[type="color"] {

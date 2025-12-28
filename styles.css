@@ -325,8 +325,10 @@ body {
 .field-hint {
     display: block;
     margin-top: 0.5rem;
-    font-size: 0.85rem;
-    color: var(--text-secondary);
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    line-height: 1.4;
 }
 
 .text2picture-preview {

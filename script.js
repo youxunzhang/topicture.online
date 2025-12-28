@@ -12,6 +12,7 @@ let promptInput, textWidthInput, textHeightInput, textFormatSelect, textGenerate
 let textPreviewFrame, textPreviewImage, textPreviewPlaceholder, textPreviewSize, textPreviewFormat;
 let textBackgroundColor;
 let hamburger, navMenu;
+let textBackgroundRegenerateTimer;
 
 // Initialize the application
 document.addEventListener('DOMContentLoaded', function() {
@@ -481,7 +482,22 @@ function updateTextBackgroundPreview() {
         if (textDownloadBtn) {
             textDownloadBtn.disabled = true;
         }
+        scheduleTextImageRegeneration();
     }
+}
+
+function scheduleTextImageRegeneration() {
+    if (!promptInput || !promptInput.value.trim() || !textGenerateBtn) {
+        return;
+    }
+    if (textBackgroundRegenerateTimer) {
+        clearTimeout(textBackgroundRegenerateTimer);
+    }
+    textBackgroundRegenerateTimer = setTimeout(() => {
+        if (!textGenerateBtn.disabled) {
+            generateTextToImage();
+        }
+    }, 300);
 }
 
 function getContrastTextColor(hexColor) {

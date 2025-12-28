@@ -121,6 +121,7 @@ function initializeEventListeners() {
     if (textGenerateBtn) textGenerateBtn.addEventListener('click', generateTextToImage);
     if (textDownloadBtn) textDownloadBtn.addEventListener('click', downloadGeneratedTextImage);
     if (textBackgroundColor) {
+        textBackgroundColor.value = '#ffffff';
         textBackgroundColor.addEventListener('input', updateTextBackgroundPreview);
         textBackgroundColor.addEventListener('change', updateTextBackgroundPreview);
         updateTextBackgroundPreview();

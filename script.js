@@ -10,6 +10,7 @@ let widthInput, heightInput, aspectRatioCheckbox, qualitySlider, qualityValue;
 let formatSelect, resizeBtn, downloadBtn, resetBtn;
 let promptInput, textWidthInput, textHeightInput, textFormatSelect, textGenerateBtn, textDownloadBtn;
 let textPreviewImage, textPreviewPlaceholder, textPreviewSize, textPreviewFormat;
+let textBackgroundOptions, textBackgroundColor, textBackgroundCustomPicker;
 let hamburger, navMenu;
 
 // Initialize the application
@@ -48,6 +49,9 @@ function initializeDOMElements() {
     textPreviewPlaceholder = document.getElementById('textPreviewPlaceholder');
     textPreviewSize = document.getElementById('textPreviewSize');
     textPreviewFormat = document.getElementById('textPreviewFormat');
+    textBackgroundOptions = document.querySelectorAll('input[name="textBackground"]');
+    textBackgroundColor = document.getElementById('textBackgroundColor');
+    textBackgroundCustomPicker = document.getElementById('textBackgroundCustomPicker');
 
     // Debug: Log which elements were found
     console.log('DOM Elements initialized:', {
@@ -74,7 +78,9 @@ function initializeDOMElements() {
         textFormatSelect: !!textFormatSelect,
         textGenerateBtn: !!textGenerateBtn,
         textDownloadBtn: !!textDownloadBtn,
-        textPreviewImage: !!textPreviewImage
+        textPreviewImage: !!textPreviewImage,
+        textBackgroundOptions: textBackgroundOptions && textBackgroundOptions.length > 0,
+        textBackgroundColor: !!textBackgroundColor
     });
 }
 
@@ -114,6 +120,15 @@ function initializeEventListeners() {
     // Text to picture events
     if (textGenerateBtn) textGenerateBtn.addEventListener('click', generateTextToImage);
     if (textDownloadBtn) textDownloadBtn.addEventListener('click', downloadGeneratedTextImage);
+    if (textBackgroundOptions && textBackgroundOptions.length > 0) {
+        textBackgroundOptions.forEach(option => {
+            option.addEventListener('change', updateBackgroundPickerVisibility);
+        });
+    }
+    if (textBackgroundColor) {
+        textBackgroundColor.addEventListener('input', updateBackgroundPickerVisibility);
+    }
+    updateBackgroundPickerVisibility();
 
     console.log('Event listeners initialized successfully');
 }
@@ -331,16 +346,9 @@ function generateTextToImage(event) {
     textGenerateBtn.innerHTML = '<div class="loading"></div> Rendering...';
     textGenerateBtn.disabled = true;
 
-    // Create background gradient based on the prompt
-    const gradient = createPromptGradient(ctx, width, height, prompt);
-    ctx.fillStyle = gradient;
-    ctx.fillRect(0, 0, width, height);
-
-    // Overlay for better contrast
-    const overlay = ctx.createLinearGradient(0, 0, 0, height);
-    overlay.addColorStop(0, 'rgba(0, 0, 0, 0.15)');
-    overlay.addColorStop(1, 'rgba(0, 0, 0, 0.45)');
-    ctx.fillStyle = overlay;
+    const backgroundColor = getSelectedBackgroundColor();
+    const textColors = getTextFillColors(backgroundColor);
+    ctx.fillStyle = backgroundColor;
     ctx.fillRect(0, 0, width, height);
 
     const padding = Math.round(Math.min(width, height) * 0.08);
@@ -351,7 +359,7 @@ function generateTextToImage(event) {
     const maxTextBottom = height - footerFontSize - padding * 1.5;
 
     ctx.font = textFont;
-    ctx.fillStyle = 'rgba(255, 255, 255, 0.95)';
+    ctx.fillStyle = textColors.primary;
     ctx.textBaseline = 'top';
 
     const maxTextWidth = width - padding * 2;
@@ -369,7 +377,7 @@ function generateTextToImage(event) {
 
     // Add footer branding
     ctx.font = `500 ${footerFontSize}px "Inter", "Segoe UI", sans-serif`;
-    ctx.fillStyle = 'rgba(255, 255, 255, 0.75)';
+    ctx.fillStyle = textColors.secondary;
     const footerText = 'Generated with topicture.online';
     const footerWidth = ctx.measureText(footerText).width;
     ctx.fillText(footerText, width - footerWidth - padding, height - footerFontSize - padding);
@@ -448,15 +456,72 @@ function updateTextPreviewMeta(width, height, mimeType) {
     }
 }
 
-function createPromptGradient(ctx, width, height, prompt) {
-    const seed = Array.from(prompt).reduce((acc, char) => {
-        return acc + char.charCodeAt(0);
-    }, 0);
-    const hue = Math.abs(seed * 3) % 360;
-    const gradient = ctx.createLinearGradient(0, 0, width, height);
-    gradient.addColorStop(0, `hsl(${hue}, 75%, 55%)`);
-    gradient.addColorStop(1, `hsl(${(hue + 120) % 360}, 70%, 45%)`);
-    return gradient;
+function updateBackgroundPickerVisibility() {
+    if (!textBackgroundCustomPicker) return;
+    const selectedOption = getSelectedBackgroundOption();
+    const shouldShow = selectedOption && selectedOption.value === 'custom';
+    textBackgroundCustomPicker.classList.toggle('active', shouldShow);
+}
+
+function getSelectedBackgroundOption() {
+    if (!textBackgroundOptions || textBackgroundOptions.length === 0) {
+        return null;
+    }
+    return Array.from(textBackgroundOptions).find(option => option.checked) || null;
+}
+
+function getSelectedBackgroundColor() {
+    const selectedOption = getSelectedBackgroundOption();
+    if (!selectedOption) {
+        return '#ffffff';
+    }
+    switch (selectedOption.value) {
+        case 'black':
+            return '#111827';
+        case 'gray':
+            return '#9ca3af';
+        case 'custom':
+            return textBackgroundColor?.value || '#ffffff';
+        case 'white':
+        default:
+            return '#ffffff';
+    }
+}
+
+function getTextFillColors(backgroundColor) {
+    const rgb = parseHexColor(backgroundColor);
+    const luminance = rgb ? getLuminance(rgb) : 1;
+    const useLightText = luminance < 0.55;
+    return useLightText
+        ? { primary: 'rgba(255, 255, 255, 0.95)', secondary: 'rgba(255, 255, 255, 0.75)' }
+        : { primary: 'rgba(15, 23, 42, 0.9)', secondary: 'rgba(15, 23, 42, 0.65)' };
+}
+
+function parseHexColor(hex) {
+    if (!hex) return null;
+    const normalized = hex.replace('#', '');
+    if (normalized.length === 3) {
+        const expanded = normalized.split('').map(char => char + char).join('');
+        return hexToRgb(expanded);
+    }
+    if (normalized.length === 6) {
+        return hexToRgb(normalized);
+    }
+    return null;
+}
+
+function hexToRgb(hex) {
+    const intVal = parseInt(hex, 16);
+    if (Number.isNaN(intVal)) return null;
+    return {
+        r: (intVal >> 16) & 255,
+        g: (intVal >> 8) & 255,
+        b: intVal & 255
+    };
+}
+
+function getLuminance({ r, g, b }) {
+    return (0.299 * r + 0.587 * g + 0.114 * b) / 255;
 }
 
 function wrapPromptText(ctx, text, maxWidth) {

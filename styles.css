@@ -238,6 +238,77 @@ body {
     gap: 1.5rem;
 }
 
+.background-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 0.75rem;
+}
+
+.background-option {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.65rem 0.75rem;
+    border-radius: var(--border-radius);
+    border: 1px solid rgba(148, 163, 184, 0.4);
+    background: #fff;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.background-option input {
+    margin: 0;
+}
+
+.background-option:focus-within {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+}
+
+.color-swatch {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 1px solid rgba(15, 23, 42, 0.2);
+    display: inline-block;
+}
+
+.swatch-white {
+    background: #ffffff;
+}
+
+.swatch-black {
+    background: #111827;
+}
+
+.swatch-gray {
+    background: #9ca3af;
+}
+
+.swatch-custom {
+    background: linear-gradient(135deg, #f97316, #6366f1);
+}
+
+.custom-color-picker {
+    margin-top: 0.75rem;
+    display: none;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.custom-color-picker.active {
+    display: flex;
+}
+
+.custom-color-picker input[type="color"] {
+    width: 48px;
+    height: 36px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+}
+
 .form-actions {
     display: flex;
     gap: 1rem;

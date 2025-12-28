@@ -10,6 +10,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const sizeSelect = document.getElementById('posterSize');
     const fontSelect = document.getElementById('posterFont');
     const backgroundInput = document.getElementById('posterBackground');
+    const backgroundOptions = document.querySelectorAll('.bg-option');
+    const customBackground = document.querySelector('.bg-custom');
     const textColorInput = document.getElementById('posterTextColor');
     const autoColorToggle = document.getElementById('posterAutoColor');
     const sizeLabel = document.getElementById('posterSizeLabel');
@@ -51,6 +53,21 @@ document.addEventListener('DOMContentLoaded', () => {
         const b = parseInt(normalized.substring(4, 6), 16) / 255;
         const luminance = 0.2126 * r + 0.7152 * g + 0.0722 * b;
         return luminance > 0.6 ? '#111827' : '#f8fafc';
+    };
+
+    const setActiveBackground = (color, source = 'preset') => {
+        const normalized = color.toLowerCase();
+        let matched = false;
+        backgroundOptions.forEach((option) => {
+            const isActive = option.dataset.color.toLowerCase() === normalized && source !== 'custom';
+            option.classList.toggle('active', isActive);
+            if (isActive) {
+                matched = true;
+            }
+        });
+        if (customBackground) {
+            customBackground.classList.toggle('active', source === 'custom' || !matched);
+        }
     };
 
     const renderPoster = () => {
@@ -162,7 +179,20 @@ document.addEventListener('DOMContentLoaded', () => {
     textInput.addEventListener('input', handleChange);
     sizeSelect.addEventListener('change', handleChange);
     fontSelect.addEventListener('change', handleChange);
-    backgroundInput.addEventListener('input', handleChange);
+    backgroundOptions.forEach((option) => {
+        option.addEventListener('click', () => {
+            const selectedColor = option.dataset.color;
+            if (backgroundInput && selectedColor) {
+                backgroundInput.value = selectedColor;
+                setActiveBackground(selectedColor);
+                handleChange();
+            }
+        });
+    });
+    backgroundInput.addEventListener('input', () => {
+        setActiveBackground(backgroundInput.value, 'custom');
+        handleChange();
+    });
     if (textColorInput) {
         textColorInput.addEventListener('input', handleChange);
     }
@@ -171,6 +201,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     exportBtn.addEventListener('click', handleExport);
 
+    if (backgroundInput) {
+        setActiveBackground(backgroundInput.value);
+    }
     document.fonts.ready.then(renderPoster);
     attachFAQToggle();
     renderPoster();

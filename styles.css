@@ -1902,6 +1902,48 @@ body {
     margin-bottom: 1.5rem;
 }
 
+.background-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.bg-option,
+.bg-custom {
+    border: 2px solid var(--border-color);
+    border-radius: var(--border-radius);
+    background: var(--background-alt);
+    color: var(--text-primary);
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    cursor: pointer;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.bg-option.active,
+.bg-custom.active {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
+    background: #eef2ff;
+}
+
+.bg-option:hover,
+.bg-custom:hover {
+    border-color: var(--primary-color);
+}
+
+.bg-custom input[type="color"] {
+    width: 34px;
+    height: 34px;
+    border: none;
+    padding: 0;
+    background: none;
+    cursor: pointer;
+}
+
 .poster-size-pill {
     display: flex;
     align-items: center;

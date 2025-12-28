@@ -9,7 +9,7 @@ let uploadArea, imageInput, resizerControls, imagePreview, originalSize, newSize
 let widthInput, heightInput, aspectRatioCheckbox, qualitySlider, qualityValue;
 let formatSelect, resizeBtn, downloadBtn, resetBtn;
 let promptInput, textWidthInput, textHeightInput, textFormatSelect, textGenerateBtn, textDownloadBtn;
-let textPreviewImage, textPreviewPlaceholder, textPreviewSize, textPreviewFormat;
+let textPreviewImage, textPreviewPlaceholder, textPreviewSize, textPreviewFormat, textPreviewFrame;
 let textBackgroundOptions, textBackgroundColor, textBackgroundCustomPicker;
 let hamburger, navMenu;
 
@@ -49,6 +49,7 @@ function initializeDOMElements() {
     textPreviewPlaceholder = document.getElementById('textPreviewPlaceholder');
     textPreviewSize = document.getElementById('textPreviewSize');
     textPreviewFormat = document.getElementById('textPreviewFormat');
+    textPreviewFrame = document.getElementById('textPreviewFrame');
     textBackgroundOptions = document.querySelectorAll('input[name="textBackground"]');
     textBackgroundColor = document.getElementById('textBackgroundColor');
     textBackgroundCustomPicker = document.getElementById('textBackgroundCustomPicker');
@@ -461,6 +462,7 @@ function updateBackgroundPickerVisibility() {
     const selectedOption = getSelectedBackgroundOption();
     const shouldShow = selectedOption && selectedOption.value === 'custom';
     textBackgroundCustomPicker.classList.toggle('active', shouldShow);
+    updatePreviewBackgroundColor();
 }
 
 function getSelectedBackgroundOption() {
@@ -486,6 +488,11 @@ function getSelectedBackgroundColor() {
         default:
             return '#ffffff';
     }
+}
+
+function updatePreviewBackgroundColor() {
+    if (!textPreviewFrame) return;
+    textPreviewFrame.style.backgroundColor = getSelectedBackgroundColor();
 }
 
 function getTextFillColors(backgroundColor) {

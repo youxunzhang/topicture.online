@@ -306,7 +306,27 @@
                             </select>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-actions">
+                        <button class="btn btn-primary" id="textGenerateBtn" type="button">
+                            <i class="fas fa-wand-magic"></i>
+                            Create Picture
+                        </button>
+                        <button class="btn btn-secondary" id="textDownloadBtn" type="button" disabled>
+                            <i class="fas fa-download"></i>
+                            Download Image
+                        </button>
+                    </div>
+                    <p class="form-hint">Tip: Longer prompts with clear visual directions yield richer artwork.</p>
+                </div>
+                <div class="text2picture-preview">
+                    <div class="preview-frame">
+                        <img id="textPreviewImage" alt="Generated from text" loading="lazy">
+                        <div class="preview-placeholder" id="textPreviewPlaceholder">
+                            <i class="fas fa-sparkles"></i>
+                            <p>Your generated image will appear here.</p>
+                        </div>
+                    </div>
+                    <div class="preview-background">
                         <label>Background</label>
                         <div class="background-options" role="radiogroup" aria-label="Background color">
                             <label class="background-option">
@@ -332,26 +352,6 @@
                         </div>
                         <div class="custom-color-picker" id="textBackgroundCustomPicker">
                             <input type="color" id="textBackgroundColor" value="#ffffff" aria-label="Custom background color">
-                        </div>
-                    </div>
-                    <div class="form-actions">
-                        <button class="btn btn-primary" id="textGenerateBtn" type="button">
-                            <i class="fas fa-wand-magic"></i>
-                            Create Picture
-                        </button>
-                        <button class="btn btn-secondary" id="textDownloadBtn" type="button" disabled>
-                            <i class="fas fa-download"></i>
-                            Download Image
-                        </button>
-                    </div>
-                    <p class="form-hint">Tip: Longer prompts with clear visual directions yield richer artwork.</p>
-                </div>
-                <div class="text2picture-preview">
-                    <div class="preview-frame">
-                        <img id="textPreviewImage" alt="Generated from text" loading="lazy">
-                        <div class="preview-placeholder" id="textPreviewPlaceholder">
-                            <i class="fas fa-sparkles"></i>
-                            <p>Your generated image will appear here.</p>
                         </div>
                     </div>
                     <ul class="preview-meta" id="textPreviewMeta">

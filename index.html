@@ -305,6 +305,12 @@
                                 <option value="jpeg">JPEG</option>
                             </select>
                         </div>
+                        <div class="form-group">
+                            <label for="textBackgroundColor">Background Color</label>
+                            <div class="custom-color-picker">
+                                <input type="color" id="textBackgroundColor" value="#ffffff" aria-label="Background color">
+                            </div>
+                        </div>
                     </div>
                     <div class="form-actions">
                         <button class="btn btn-primary" id="textGenerateBtn" type="button">
@@ -319,17 +325,11 @@
                     <p class="form-hint">Tip: Longer prompts with clear visual directions yield richer artwork.</p>
                 </div>
                 <div class="text2picture-preview">
-                    <div class="preview-frame">
+                    <div class="preview-frame" id="textPreviewFrame">
                         <img id="textPreviewImage" alt="Generated from text" loading="lazy">
                         <div class="preview-placeholder" id="textPreviewPlaceholder">
                             <i class="fas fa-sparkles"></i>
                             <p>Your generated image will appear here.</p>
-                        </div>
-                    </div>
-                    <div class="preview-background">
-                        <label for="textBackgroundColor">Background Color</label>
-                        <div class="custom-color-picker">
-                            <input type="color" id="textBackgroundColor" value="#ffffff" aria-label="Background color">
                         </div>
                     </div>
                     <ul class="preview-meta" id="textPreviewMeta">

@@ -234,7 +234,7 @@ body {
 
 .form-row {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 1.5rem;
 }
 
@@ -297,7 +297,7 @@ body {
 }
 
 .custom-color-picker {
-    margin-top: 0.75rem;
+    margin-top: 0;
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -336,7 +336,8 @@ body {
     position: relative;
     border-radius: var(--border-radius);
     overflow: hidden;
-    background: rgba(15, 23, 42, 0.85);
+    background: var(--preview-bg, #ffffff);
+    border: 1px solid rgba(148, 163, 184, 0.35);
     min-height: 320px;
     display: flex;
     align-items: center;
@@ -352,7 +353,7 @@ body {
 
 .preview-placeholder {
     text-align: center;
-    color: rgba(255, 255, 255, 0.9);
+    color: var(--preview-text, rgba(15, 23, 42, 0.75));
     display: flex;
     flex-direction: column;
     align-items: center;

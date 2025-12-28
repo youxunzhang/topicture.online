@@ -9,7 +9,7 @@ let uploadArea, imageInput, resizerControls, imagePreview, originalSize, newSize
 let widthInput, heightInput, aspectRatioCheckbox, qualitySlider, qualityValue;
 let formatSelect, resizeBtn, downloadBtn, resetBtn;
 let promptInput, textWidthInput, textHeightInput, textFormatSelect, textGenerateBtn, textDownloadBtn;
-let textPreviewImage, textPreviewPlaceholder, textPreviewSize, textPreviewFormat;
+let textPreviewFrame, textPreviewImage, textPreviewPlaceholder, textPreviewSize, textPreviewFormat;
 let textBackgroundColor;
 let hamburger, navMenu;
 
@@ -45,6 +45,7 @@ function initializeDOMElements() {
     textFormatSelect = document.getElementById('textFormatSelect');
     textGenerateBtn = document.getElementById('textGenerateBtn');
     textDownloadBtn = document.getElementById('textDownloadBtn');
+    textPreviewFrame = document.getElementById('textPreviewFrame');
     textPreviewImage = document.getElementById('textPreviewImage');
     textPreviewPlaceholder = document.getElementById('textPreviewPlaceholder');
     textPreviewSize = document.getElementById('textPreviewSize');
@@ -76,6 +77,7 @@ function initializeDOMElements() {
         textFormatSelect: !!textFormatSelect,
         textGenerateBtn: !!textGenerateBtn,
         textDownloadBtn: !!textDownloadBtn,
+        textPreviewFrame: !!textPreviewFrame,
         textPreviewImage: !!textPreviewImage,
         textBackgroundColor: !!textBackgroundColor
     });
@@ -117,6 +119,10 @@ function initializeEventListeners() {
     // Text to picture events
     if (textGenerateBtn) textGenerateBtn.addEventListener('click', generateTextToImage);
     if (textDownloadBtn) textDownloadBtn.addEventListener('click', downloadGeneratedTextImage);
+    if (textBackgroundColor) {
+        textBackgroundColor.addEventListener('input', updateTextBackgroundPreview);
+        updateTextBackgroundPreview();
+    }
     console.log('Event listeners initialized successfully');
 }
 
@@ -448,6 +454,32 @@ function updateTextPreviewMeta(width, height, mimeType) {
 
 function getSelectedBackgroundColor() {
     return textBackgroundColor?.value || '#ffffff';
+}
+
+function updateTextBackgroundPreview() {
+    if (!textPreviewFrame) return;
+
+    const backgroundColor = getSelectedBackgroundColor();
+    const textColor = getContrastTextColor(backgroundColor);
+    textPreviewFrame.style.setProperty('--preview-bg', backgroundColor);
+    textPreviewFrame.style.setProperty('--preview-text', textColor);
+}
+
+function getContrastTextColor(hexColor) {
+    if (!hexColor || !hexColor.startsWith('#')) {
+        return 'rgba(15, 23, 42, 0.75)';
+    }
+
+    const normalized = hexColor.replace('#', '');
+    const value = normalized.length === 3
+        ? normalized.split('').map(char => char + char).join('')
+        : normalized.padEnd(6, '0');
+    const red = parseInt(value.slice(0, 2), 16);
+    const green = parseInt(value.slice(2, 4), 16);
+    const blue = parseInt(value.slice(4, 6), 16);
+    const luminance = (0.2126 * red + 0.7152 * green + 0.0722 * blue) / 255;
+
+    return luminance > 0.6 ? 'rgba(15, 23, 42, 0.75)' : 'rgba(255, 255, 255, 0.92)';
 }
 
 function wrapPromptText(ctx, text, maxWidth) {

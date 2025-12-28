@@ -121,6 +121,7 @@ function initializeEventListeners() {
     if (textDownloadBtn) textDownloadBtn.addEventListener('click', downloadGeneratedTextImage);
     if (textBackgroundColor) {
         textBackgroundColor.addEventListener('input', updateTextBackgroundPreview);
+        textBackgroundColor.addEventListener('change', updateTextBackgroundPreview);
         updateTextBackgroundPreview();
     }
     console.log('Event listeners initialized successfully');
@@ -400,7 +401,8 @@ function generateTextToImage(event) {
             url: url,
             width: width,
             height: height,
-            format: selectedFormat
+            format: selectedFormat,
+            backgroundColor: backgroundColor
         };
 
         if (textPreviewImage) {
@@ -463,6 +465,23 @@ function updateTextBackgroundPreview() {
     const textColor = getContrastTextColor(backgroundColor);
     textPreviewFrame.style.setProperty('--preview-bg', backgroundColor);
     textPreviewFrame.style.setProperty('--preview-text', textColor);
+
+    if (generatedTextImageData && generatedTextImageData.backgroundColor !== backgroundColor) {
+        if (generatedTextImageData.url) {
+            URL.revokeObjectURL(generatedTextImageData.url);
+        }
+        generatedTextImageData = null;
+
+        if (textPreviewImage) {
+            textPreviewImage.style.display = 'none';
+        }
+        if (textPreviewPlaceholder) {
+            textPreviewPlaceholder.style.display = 'flex';
+        }
+        if (textDownloadBtn) {
+            textDownloadBtn.disabled = true;
+        }
+    }
 }
 
 function getContrastTextColor(hexColor) {
